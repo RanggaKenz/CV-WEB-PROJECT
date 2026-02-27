@@ -1,54 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Rangga-web portfolio</title>
+    <title>Rangga - Web Portfolio</title>
 </head>
 
 <body>
-    <!-- NAVBAR -->
-    <nav>
-        <p class="nav-name">Rangga</p>
-        <ul class="nav-links">
-            <li class="Home"><a href="#home">Home</a></li>
-            <li class="About"><a href="#about">About</a></li>
-            <li class="Project"><a href="#project">Project</a></li>
-            <li class="Contact"><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
 
-    <!-- HOME -->
-    <section class="home-section">
-        <h1 class="home-title">WEB DEVELOPER</h1>
-        <div class="profile">
-            <img src="images/profile.jpg" alt="Profile Picture">
-        </div>
-        <h2 class="home-subtitle">Hi. I'm Rangga</h2>
-        <p>Welcome to my portfolio where creativity meets precision technical functionality.
-        I focus on developing seamless user experiences and clean, modern visual designs. Every project is an opportunity for me to 
-        create unique solutions that make a real impact. Let's turn your great ideas into outstanding, distinctive digital works.</p>
-        <button class="button-cv">download cv</button>
-    </section>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <p class="nav-name">Rangga</p>
 
-    <!-- ABOUT -->
-    <section class="about-section">
-  <h1 class="section-title">About me</h1>
+    <ul class="nav-links">
+        <div class="active-box"></div>
+        <li><a href="#home" class="nav-item active">Home</a></li>
+        <li><a href="#about" class="nav-item">About</a></li>
+        <li><a href="#project" class="nav-item">Project</a></li>
+        <li><a href="#contact" class="nav-item">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="home-section">
+    <h1 class="home-title">Web Developer</h1>
+
+    <div class="profile">
+        <img src="src/profile.png" alt="Profile Picture">
+    </div>
+
+    <h2 class="home-subtitle">Hi, I'm <span>Rangga</span></h2>
+
+    <p class="home-desc">
+        Welcome to my portfolio where creativity meets precision technical functionality.
+        I focus on developing seamless user experiences and clean, modern visual designs.
+        Every project is an opportunity to create unique solutions that make a real impact.
+    </p>
+
+    <a href="src/cv.pdf" download class="button-cv">
+        Download CV
+    </a>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+    <h1 class="section-title">About Me</h1>
 </section>
 
 <!-- PROJECT -->
- <section class="project-section">
+<section id="project" class="project-section">
     <h1 class="project-title">My Projects</h1>
- </section>
+</section>
 
- <!-- CONTACT -->
-  <section class="contact-section">
-    <h1 class="contact-title">Contact me</h1>
-    
-  </section>
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+    <h1 class="contact-title">Contact Me</h1>
+</section>
+
+<script>
+const navItems = document.querySelectorAll(".nav-item");
+const activeBox = document.querySelector(".active-box");
+
+function moveBox(element){
+    const { offsetLeft, offsetWidth } = element;
+    activeBox.style.left = offsetLeft + "px";
+    activeBox.style.width = offsetWidth + "px";
+}
+
+navItems.forEach(item => {
+    item.addEventListener("click", function(){
+        navItems.forEach(i => i.classList.remove("active"));
+        this.classList.add("active");
+        moveBox(this);
+    });
+});
+
+window.onload = () => {
+    moveBox(document.querySelector(".active"));
+};
+</script>
+
 </body>
-
 </html>
