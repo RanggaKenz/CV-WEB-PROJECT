@@ -1,86 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Rangga - Web Portfolio</title>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-    <p class="nav-name">Rangga</p>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <p class="nav-name">Rangga</p>
 
-    <ul class="nav-links">
-        <div class="active-box"></div>
-        <li><a href="#home" class="nav-item active">Home</a></li>
-        <li><a href="#about" class="nav-item">About</a></li>
-        <li><a href="#project" class="nav-item">Project</a></li>
-        <li><a href="#contact" class="nav-item">Contact</a></li>
-    </ul>
-</nav>
+        <ul class="nav-links">
+            <div class="active-box"></div>
+            <li><a href="#home" class="nav-item active">Home</a></li>
+            <li><a href="#about" class="nav-item">About</a></li>
+            <li><a href="#project" class="nav-item">Project</a></li>
+            <li><a href="#contact" class="nav-item">Contact</a></li>
+        </ul>
+    </nav>
 
-<!-- HOME -->
-<section id="home" class="home-section">
-    <h1 class="home-title">Web Developer</h1>
+    <!-- HOME -->
+    <section id="home" class="home-section">
+        <h1 class="home-title">Web Developer</h1>
 
-    <div class="profile">
-        <img src="src/profile.png" alt="Profile Picture">
-    </div>
+        <div class="profile">
+            <img src="src/profile.png" alt="Profile Picture">
+        </div>
 
-    <h2 class="home-subtitle">Hi, I'm <span>Rangga</span></h2>
+        <h2 class="home-subtitle">Hi, I'm <span>Rangga</span></h2>
 
-    <p class="home-desc">
-        Welcome to my portfolio where creativity meets precision technical functionality.
-        I focus on developing seamless user experiences and clean, modern visual designs.
-        Every project is an opportunity to create unique solutions that make a real impact.
-    </p>
+        <p class="home-desc">
+            Welcome to my portfolio where creativity meets precision technical functionality.
+            I focus on developing seamless user experiences and clean, modern visual designs.
+            Every project is an opportunity to create unique solutions that make a real impact.
+        </p>
 
-    <a href="src/cv.pdf" download class="button-cv">
-        Download CV
-    </a>
-</section>
+        <a href="src/cv.pdf" download class="button-cv">
+            Download CV
+        </a>
+    </section>
 
-<!-- ABOUT -->
-<section id="about" class="about-section">
-    <h1 class="section-title">About Me</h1>
-</section>
+    <!-- ABOUT -->
+    <section id="about" class="about-section">
+        <h1 class="section-title">About Me</h1>
+        <div class="about-container">
+            <!-- LEFT -->
+            <div class="left-side">
 
-<!-- PROJECT -->
-<section id="project" class="project-section">
-    <h1 class="project-title">My Projects</h1>
-</section>
+                <div class="profile-wrapper">
+                    <div class="profile-circle">
+                        <img src="src/profile.png" alt="Profile Picture">
+                    </div>
+                </div>
 
-<!-- CONTACT -->
-<section id="contact" class="contact-section">
-    <h1 class="contact-title">Contact Me</h1>
-</section>
+                <div class="toggle-btns">
+                    <button class="active" onclick="showExperience()">Experience</button>
+                    <button onclick="showEducation()">Education</button>
+                </div>
 
-<script>
-const navItems = document.querySelectorAll(".nav-item");
-const activeBox = document.querySelector(".active-box");
+                <div id="experience-content">
+                    <div class="timeline-item">
+                        <h4>Web Designer</h4>
+                        <span>2023</span>
+                        <p>During this period, I dedicated my time to exploring the role of a professional Web 
+                            Designer with a focus on intuitive interfaces. I successfully translated client needs into 
+                            functional and aesthetically appealing design prototypes with a modern touch.</p>
+                    </div>
 
-function moveBox(element){
-    const { offsetLeft, offsetWidth } = element;
-    activeBox.style.left = offsetLeft + "px";
-    activeBox.style.width = offsetWidth + "px";
-}
+                    <div class="timeline-item">
+                        <h4>Web Developer</h4>
+                        <span>2024</span>
+                        <p>At the same time, I actively contribute as a Web Developer to turn designs into complete and functional digital products. 
+                            I am responsible for building clean, responsive, and optimized code structures across various devices and browsers.</p>
+                    </div>
+                </div>
 
-navItems.forEach(item => {
-    item.addEventListener("click", function(){
-        navItems.forEach(i => i.classList.remove("active"));
-        this.classList.add("active");
-        moveBox(this);
-    });
-});
+                <div id="education-content" class="hidden">
+                    <div class="timeline-item">
+                        <h4>Informatics Student</h4>
+                        <span>2023 - Present</span>
+                        <p>I studied at university majoring in Informatics, where I specialized in web development. There, I also learned how computers and systems work.</p>
+                    </div>
 
-window.onload = () => {
-    moveBox(document.querySelector(".active"));
-};
-</script>
+                    <div class="timeline-item">
+                        <h4>Web developer bootcamp</h4>
+                        <span>2025</span>
+                        <p>I completed intensive education in Web Development to deepen my mastery of modern technology and the latest web architecture.
+                            This program equipped me with a deep understanding of programming languages and frameworks that are the main standards in the digital industry. </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="right-side">
+                <h2>My story</h2>
+                <p>
+                    I am a web developer dedicated to building efficient and elegant digital solutions.
+                    With experience in design, I strive to translate client vision into intuitive interfaces.
+                    I believe that small details in code and visuals create real impact on user satisfaction.
+                </p>
+
+                <h3 class="skill-title">Skill</h3>
+
+                <div class="skill-grid">
+                    <div class="skill-card">
+                        <i class="devicon-react-original colored"></i>
+                        <h5>React</h5>
+                    </div>
+
+                    <div class="skill-card">
+                        <i class="devicon-javascript-plain colored"></i>
+                        <h5>JavaScript</h5>
+                    </div>
+
+                    <div class="skill-card">
+                        <i class="devicon-python-plain colored"></i>
+                        <h5>Python</h5>
+                    </div>
+
+                    <div class="skill-card">
+                        <i class="devicon-nodejs-plain colored"></i>
+                        <h5>Node.js</h5>
+                    </div>
+
+                    <div class="skill-card">
+                        <i class="devicon-mongodb-plain colored"></i>
+                        <h5>MongoDB</h5>
+                    </div>
+
+                    <div class="skill-card">
+                        <i class="devicon-tailwindcss-plain colored"></i>
+                        <h5>Tailwind</h5>
+                    </div>
+                </div>
+
+            </div>
+
+    </section>
+
+    <!-- PROJECT -->
+    <section id="project" class="project-section">
+        <h1 class="project-title">My Projects</h1>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+        <h1 class="contact-title">Contact Me</h1>
+    </section>
+
+    <script>
+        const navItems = document.querySelectorAll(".nav-item");
+        const activeBox = document.querySelector(".active-box");
+
+        function moveBox(element) {
+            const { offsetLeft, offsetWidth } = element;
+            activeBox.style.left = offsetLeft + "px";
+            activeBox.style.width = offsetWidth + "px";
+        }
+
+        navItems.forEach(item => {
+            item.addEventListener("click", function () {
+                navItems.forEach(i => i.classList.remove("active"));
+                this.classList.add("active");
+                moveBox(this);
+            });
+        });
+
+        window.onload = () => {
+            moveBox(document.querySelector(".active"));
+        };
+
+        function showExperience() {
+            document.getElementById("experience-content").classList.remove("hidden");
+            document.getElementById("education-content").classList.add("hidden");
+
+            document.querySelectorAll(".toggle-btns button")[0].classList.add("active");
+            document.querySelectorAll(".toggle-btns button")[1].classList.remove("active");
+        }
+
+        function showEducation() {
+            document.getElementById("education-content").classList.remove("hidden");
+            document.getElementById("experience-content").classList.add("hidden");
+
+            document.querySelectorAll(".toggle-btns button")[1].classList.add("active");
+            document.querySelectorAll(".toggle-btns button")[0].classList.remove("active");
+        }
+    </script>
 
 </body>
+
 </html>
