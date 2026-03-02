@@ -312,3 +312,72 @@ body{
     color: #444;
     margin: 0;
 }
+
+.project-section {
+  background-color: #9fc0d4;
+  padding: 80px 8%;
+  text-align: center;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.project-card {
+  background: #eaeaea;
+  padding: 25px;
+  border-radius: 16px;
+  text-align: left;
+  transition: 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+}
+
+.project-img {
+  height: 180px;
+  background: #cfcfcf;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.project-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.project-btns {
+  display: flex;
+  gap: 15px;
+}
+
+.project-btns a {
+  flex: 1;
+  text-align: center;
+  background: #3ba3ec;
+  padding: 10px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.more-btn {
+  margin-top: 50px;
+  padding: 12px 40px;
+  background: #3ba3ec;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+}
+
+.hidden-project {
+  display: none;
+}

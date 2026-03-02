@@ -68,16 +68,18 @@
                     <div class="timeline-item">
                         <h4>Web Designer</h4>
                         <span>2023</span>
-                        <p>During this period, I dedicated my time to exploring the role of a professional Web 
-                            Designer with a focus on intuitive interfaces. I successfully translated client needs into 
+                        <p>During this period, I dedicated my time to exploring the role of a professional Web
+                            Designer with a focus on intuitive interfaces. I successfully translated client needs into
                             functional and aesthetically appealing design prototypes with a modern touch.</p>
                     </div>
 
                     <div class="timeline-item">
                         <h4>Web Developer</h4>
                         <span>2024</span>
-                        <p>At the same time, I actively contribute as a Web Developer to turn designs into complete and functional digital products. 
-                            I am responsible for building clean, responsive, and optimized code structures across various devices and browsers.</p>
+                        <p>At the same time, I actively contribute as a Web Developer to turn designs into complete and
+                            functional digital products.
+                            I am responsible for building clean, responsive, and optimized code structures across
+                            various devices and browsers.</p>
                     </div>
                 </div>
 
@@ -85,14 +87,17 @@
                     <div class="timeline-item">
                         <h4>Informatics Student</h4>
                         <span>2023 - Present</span>
-                        <p>I studied at university majoring in Informatics, where I specialized in web development. There, I also learned how computers and systems work.</p>
+                        <p>I studied at university majoring in Informatics, where I specialized in web development.
+                            There, I also learned how computers and systems work.</p>
                     </div>
 
                     <div class="timeline-item">
                         <h4>Web developer bootcamp</h4>
                         <span>2025</span>
-                        <p>I completed intensive education in Web Development to deepen my mastery of modern technology and the latest web architecture.
-                            This program equipped me with a deep understanding of programming languages and frameworks that are the main standards in the digital industry. </p>
+                        <p>I completed intensive education in Web Development to deepen my mastery of modern technology
+                            and the latest web architecture.
+                            This program equipped me with a deep understanding of programming languages and frameworks
+                            that are the main standards in the digital industry. </p>
                     </div>
                 </div>
 
@@ -146,8 +151,54 @@
     </section>
 
     <!-- PROJECT -->
-    <section id="project" class="project-section">
-        <h1 class="project-title">My Projects</h1>
+        <section id="project" class="project-section">
+            <h1 class="section-title">My Project</h1>
+
+            <div class="project-grid" id="projectGrid">
+
+                <!-- PROJECT CARD -->
+                <div class="project-card">
+                    <div class="project-img"></div>
+                    <p>This project is an interactive digital platform...</p>
+                    <div class="project-btns">
+                        <a href="#">Link</a>
+                        <a href="#">Github</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img"></div>
+                    <p>This project is an interactive digital platform...</p>
+                    <div class="project-btns">
+                        <a href="#">Link</a>
+                        <a href="#">Github</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-img"></div>
+                    <p>This project is an interactive digital platform...</p>
+                    <div class="project-btns">
+                        <a href="#">Link</a>
+                        <a href="#">Github</a>
+                    </div>
+                </div>
+
+                <!-- Tambahkan class hidden-project untuk yang mau disembunyikan dulu -->
+
+                <div class="project-card hidden-project">
+                    <div class="project-img"></div>
+                    <p>Another project description...</p>
+                    <div class="project-btns">
+                        <a href="#">Link</a>
+                        <a href="#">Github</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <button id="toggleProjectBtn" class="more-btn">More</button>
+        </section>
     </section>
 
     <!-- CONTACT -->
@@ -192,6 +243,21 @@
             document.querySelectorAll(".toggle-btns button")[1].classList.add("active");
             document.querySelectorAll(".toggle-btns button")[0].classList.remove("active");
         }
+
+        const toggleBtn = document.getElementById("toggleProjectBtn");
+        const hiddenProjects = document.querySelectorAll(".hidden-project");
+
+        let expanded = false;
+
+        toggleBtn.addEventListener("click", () => {
+            expanded = !expanded;
+
+            hiddenProjects.forEach(project => {
+                project.style.display = expanded ? "block" : "none";
+            });
+
+            toggleBtn.textContent = expanded ? "Show Less" : "More";
+        });
     </script>
 
 </body>
