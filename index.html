@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Rangga - Web Portfolio</title>
 </head>
@@ -16,7 +17,7 @@
     <nav class="navbar">
         <p class="nav-name">Rangga</p>
 
-        <div class="hamburger" id="hamburger">
+        <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Toggle navigation menu" aria-expanded="false">
             <span></span>
             <span></span>
             <span></span>
@@ -208,32 +209,105 @@
 
     <!-- CONTACT -->
     <section id="contact" class="contact-section">
-        <h1 class="contact-title">Contact Me</h1>
+        <h1 class="contact-title">Contact</h1>
+        
+        <div class="contact-container">
+            <!-- FORM EMAIL -->
+            <div class="contact-form-wrapper">
+                <h2>Send me a message</h2>
+                <form class="contact-form" action="https://formspree.io/f/xjkgqknq" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Send Message</button>
+                </form>
+            </div>
+
+            <!-- SOCIAL MEDIA -->
+            <div class="social-wrapper">
+      <h2>Connect with me</h2>
+                <div class="social-icons">
+                    <a href="https://instagram.com/masukan-link-disini" target="_blank" rel="noopener noreferrer" class="social-icon instagram" title="Instagram" aria-label="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://github.com/masukan-link-disini" target="_blank" rel="noopener noreferrer" class="social-icon github" title="GitHub" aria-label="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://wa.me/masukan-nomor-disini" target="_blank" rel="noopener noreferrer" class="social-icon whatsapp" title="WhatsApp" aria-label="WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/masukan-link-disini" target="_blank" rel="noopener noreferrer" class="social-icon linkedin" title="LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
+    <footer class="site-footer">
+        <p>&copy; 2026 Rangga. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#project">Project</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </footer>
     <script>
         // HAMBURGER MENU
         const hamburger = document.getElementById("hamburger");
         const navLinks = document.getElementById("navLinks");
+        const navItems = document.querySelectorAll(".nav-item");
+        const activeBox = document.querySelector(".active-box");
+
+        function isMobileView() {
+            return window.matchMedia("(max-width: 768px)").matches;
+        }
+
+        function closeMobileMenu() {
+            hamburger.classList.remove("active");
+            navLinks.classList.remove("mobile-active");
+            hamburger.setAttribute("aria-expanded", "false");
+        }
 
         hamburger.addEventListener("click", function () {
             hamburger.classList.toggle("active");
             navLinks.classList.toggle("mobile-active");
+            const expanded = hamburger.classList.contains("active");
+            hamburger.setAttribute("aria-expanded", String(expanded));
+        });
+
+        hamburger.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                hamburger.click();
+            }
         });
 
         // Close menu when a link is clicked
-        const navItems = document.querySelectorAll(".nav-item");
         navItems.forEach(item => {
             item.addEventListener("click", function () {
-                hamburger.classList.remove("active");
-                navLinks.classList.remove("mobile-active");
+                if (isMobileView()) {
+                    closeMobileMenu();
+                }
             });
         });
 
         // NAVBAR ACTIVE BOX ANIMATION
-        const activeBox = document.querySelector(".active-box");
-
         function moveBox(element) {
+            if (!activeBox || isMobileView()) return;
             const { offsetLeft, offsetWidth } = element;
             activeBox.style.left = offsetLeft + "px";
             activeBox.style.width = offsetWidth + "px";
@@ -250,6 +324,21 @@
         window.onload = () => {
             moveBox(document.querySelector(".active"));
         };
+
+        window.addEventListener("resize", () => {
+            if (!isMobileView()) {
+                closeMobileMenu();
+                moveBox(document.querySelector(".active"));
+            }
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!isMobileView()) return;
+            const clickedInsideNav = event.target.closest(".navbar");
+            if (!clickedInsideNav && navLinks.classList.contains("mobile-active")) {
+                closeMobileMenu();
+            }
+        });
 
         function showExperience() {
             document.getElementById("experience-content").classList.remove("hidden");
