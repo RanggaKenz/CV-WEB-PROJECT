@@ -19,15 +19,25 @@ body{
     color: var(--text);
     margin:0;
     font-family: poppins, sans-serif;
+    overflow-x: hidden;
+    padding-top: 80px;
 }
 
 /* NAVBAR */
 .navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:20px 60px;
     background:white;
+    gap: 16px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .nav-name{
@@ -39,6 +49,7 @@ body{
 .nav-links{
     position:relative;
     display:flex;
+    flex-wrap: wrap;
     gap:30px;
     list-style:none;
 }
@@ -60,10 +71,53 @@ body{
     left:0;
     transition:0.3s ease;
     z-index:1;
+    pointer-events: none;
 }
 
 .nav-item.active{
     color:white;
+}
+
+/* HAMBURGER MENU */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 6px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text);
+    border-radius: 3px;
+    transition: 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(10px, 10px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.nav-links.mobile-active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 20px;
+    gap: 10px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 /* HOME SECTION */
@@ -353,6 +407,7 @@ body{
 
 .project-btns {
   display: flex;
+  flex-wrap: wrap;
   gap: 15px;
 }
 
@@ -380,4 +435,187 @@ body{
 
 .hidden-project {
   display: none;
+}
+
+@media (max-width: 992px) {
+  body {
+    padding-top: 75px;
+  }
+
+  .navbar {
+    padding: 16px 24px;
+  }
+
+  .home-title {
+    font-size: 36px;
+  }
+
+  .home-subtitle {
+    font-size: 30px;
+  }
+
+  .about-container {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .left-side,
+  .right-side {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 65px;
+  }
+
+  .navbar {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 12px 16px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-name {
+    font-size: 18px;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .nav-links.mobile-active {
+    display: flex;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    flex-direction: column;
+    background: white;
+    padding: 15px;
+    gap: 8px;
+  }
+
+  .nav-links a {
+    padding: 10px 15px;
+    font-size: 14px;
+    display: block;
+  }
+
+  .active-box {
+    display: none;
+  }
+
+  .home-section {
+    padding: 64px 16px;
+    min-height: auto;
+  }
+
+  .home-title {
+    font-size: 30px;
+  }
+
+  .home-subtitle {
+    font-size: 26px;
+  }
+
+  .home-desc {
+    font-size: 14px;
+  }
+
+  .profile,
+  .profile-circle {
+    width: 160px;
+    height: 160px;
+  }
+
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+
+  .right-side h2 {
+    font-size: 24px;
+  }
+
+  .skill-grid {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 14px;
+  }
+
+  .project-section {
+    padding: 64px 5%;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .project-card {
+    padding: 20px;
+  }
+
+  .more-btn {
+    width: 100%;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 60px;
+  }
+
+  .navbar {
+    padding: 12px 12px;
+  }
+
+  .nav-name {
+    font-size: 16px;
+  }
+
+  .hamburger span {
+    width: 22px;
+    height: 2.5px;
+  }
+
+  .home-title {
+    font-size: 26px;
+  }
+
+  .home-subtitle {
+    font-size: 22px;
+  }
+
+  .button-cv {
+    width: 100%;
+    max-width: 260px;
+    padding: 12px 20px;
+  }
+
+  .toggle-btns {
+    width: 100%;
+  }
+
+  .toggle-btns button {
+    flex: 1;
+  }
+
+  .skill-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-btns a {
+    width: 100%;
+  }
 }

@@ -16,7 +16,13 @@
     <nav class="navbar">
         <p class="nav-name">Rangga</p>
 
-        <ul class="nav-links">
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links" id="navLinks">
             <div class="active-box"></div>
             <li><a href="#home" class="nav-item active">Home</a></li>
             <li><a href="#about" class="nav-item">About</a></li>
@@ -199,7 +205,6 @@
 
             <button id="toggleProjectBtn" class="more-btn">More</button>
         </section>
-    </section>
 
     <!-- CONTACT -->
     <section id="contact" class="contact-section">
@@ -207,7 +212,25 @@
     </section>
 
     <script>
+        // HAMBURGER MENU
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("navLinks");
+
+        hamburger.addEventListener("click", function () {
+            hamburger.classList.toggle("active");
+            navLinks.classList.toggle("mobile-active");
+        });
+
+        // Close menu when a link is clicked
         const navItems = document.querySelectorAll(".nav-item");
+        navItems.forEach(item => {
+            item.addEventListener("click", function () {
+                hamburger.classList.remove("active");
+                navLinks.classList.remove("mobile-active");
+            });
+        });
+
+        // NAVBAR ACTIVE BOX ANIMATION
         const activeBox = document.querySelector(".active-box");
 
         function moveBox(element) {
