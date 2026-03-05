@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
@@ -11,260 +11,316 @@
     <title>Rangga - Web Portfolio</title>
 </head>
 
-<body>
+<body class="antialiased scroll-smooth">
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <p class="nav-name">Rangga</p>
+    <header class="block">
+        <!-- NAVBAR -->
+        <nav class="navbar w-full" aria-label="Primary navigation">
+            <p class="nav-name">Rangga</p>
 
-        <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Toggle navigation menu" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <ul class="nav-links" id="navLinks">
-            <div class="active-box"></div>
-            <li><a href="#home" class="nav-item active">Home</a></li>
-            <li><a href="#about" class="nav-item">About</a></li>
-            <li><a href="#project" class="nav-item">Project</a></li>
-            <li><a href="#contact" class="nav-item">Contact</a></li>
-        </ul>
-    </nav>
-
-    <!-- HOME -->
-    <section id="home" class="home-section">
-        <h1 class="home-title">Web Developer</h1>
-
-        <div class="profile">
-            <img src="src/Profile.png" alt="Profile Picture">
-        </div>
-
-        <h2 class="home-subtitle">Hi, I'm <span>Rangga</span></h2>
-
-        <p class="home-desc">
-            Welcome to my portfolio where creativity meets precision technical functionality.
-            I focus on developing seamless user experiences and clean, modern visual designs.
-            Every project is an opportunity to create unique solutions that make a real impact.
-        </p>
-
-        <a href="src/CV.pdf" download class="button-cv">
-            Download CV
-        </a>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="about-section">
-        <h1 class="section-title">About Me</h1>
-        <div class="about-container">
-            <!-- LEFT -->
-            <div class="left-side">
-
-                <div class="profile-wrapper">
-                    <div class="profile-circle">
-                        <img src="src/Profile.png" alt="Profile Picture">
-                    </div>
-                </div>
-
-                <div class="toggle-btns">
-                    <button class="active" onclick="showExperience()">Experience</button>
-                    <button onclick="showEducation()">Education</button>
-                </div>
-
-                <div id="experience-content">
-                    <div class="timeline-item">
-                        <h4>Web Designer</h4>
-                        <span>2023</span>
-                        <p>During this period, I dedicated my time to exploring the role of a professional Web
-                            Designer with a focus on intuitive interfaces. I successfully translated client needs into
-                            functional and aesthetically appealing design prototypes with a modern touch.</p>
-                    </div>
-
-                    <div class="timeline-item">
-                        <h4>Web Developer</h4>
-                        <span>2024</span>
-                        <p>At the same time, I actively contribute as a Web Developer to turn designs into complete and
-                            functional digital products.
-                            I am responsible for building clean, responsive, and optimized code structures across
-                            various devices and browsers.</p>
-                    </div>
-                </div>
-
-                <div id="education-content" class="hidden">
-                    <div class="timeline-item">
-                        <h4>Informatics Student</h4>
-                        <span>2023 - Present</span>
-                        <p>I studied at university majoring in Informatics, where I specialized in web development.
-                            There, I also learned how computers and systems work.</p>
-                    </div>
-
-                    <div class="timeline-item">
-                        <h4>Web developer bootcamp</h4>
-                        <span>2025</span>
-                        <p>I completed intensive education in Web Development to deepen my mastery of modern technology
-                            and the latest web architecture.
-                            This program equipped me with a deep understanding of programming languages and frameworks
-                            that are the main standards in the digital industry. </p>
-                    </div>
-                </div>
-
+            <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Toggle navigation menu"
+                aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
 
-            <!-- RIGHT -->
-            <div class="right-side">
-                <h2>My story</h2>
-                <p>
-                    I am a web developer dedicated to building efficient and elegant digital solutions.
-                    With experience in design, I strive to translate client vision into intuitive interfaces.
-                    I believe that small details in code and visuals create real impact on user satisfaction.
-                </p>
+            <ul class="nav-links" id="navLinks">
+                <li class="active-box" aria-hidden="true"></li>
+                <li><a href="#home" class="nav-item active">Home</a></li>
+                <li><a href="#about" class="nav-item">About</a></li>
+                <li><a href="#project" class="nav-item">Project</a></li>
+                <li><a href="#contact" class="nav-item">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-                <h3 class="skill-title">Skill</h3>
+    <main class="block">
+        <!-- HOME -->
+        <section id="home" class="home-section" aria-labelledby="home-title">
+            <div class="home-content w-full">
+                <article class="home-text">
+                    <h1 id="home-title" class="home-title">Hi, I'm Rangga</h1>
+                    <h2 class="home-subtitle">I'm a <span>Web Developer</span></h2>
 
-                <div class="skill-grid">
-                    <div class="skill-card">
-                        <i class="devicon-react-original colored"></i>
-                        <h5>React</h5>
+                    <p class="home-desc">
+                        Welcome to my portfolio where creativity meets precision technical functionality.
+                        I focus on developing seamless user experiences and clean, modern visual designs.
+                        Every project is an opportunity to create unique solutions that make a real impact.
+                    </p>
+
+                    <div class="home-social-icons">
+                        <a href="https://instagram.com/masukan-link-disini" target="_blank" rel="noopener noreferrer"
+                            class="social-icon instagram" title="Instagram" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/masukan-link-disini" target="_blank" rel="noopener noreferrer"
+                            class="social-icon github" title="GitHub" aria-label="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="https://wa.me/masukan-nomor-disini" target="_blank" rel="noopener noreferrer"
+                            class="social-icon whatsapp" title="WhatsApp" aria-label="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/masukan-link-disini" target="_blank" rel="noopener noreferrer"
+                            class="social-icon linkedin" title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
                     </div>
 
-                    <div class="skill-card">
-                        <i class="devicon-javascript-plain colored"></i>
-                        <h5>JavaScript</h5>
-                    </div>
+                    <a href="src/CV.pdf" download class="button-cv inline-block">
+                        Download CV
+                    </a>
+                </article>
 
-                    <div class="skill-card">
-                        <i class="devicon-python-plain colored"></i>
-                        <h5>Python</h5>
-                    </div>
-
-                    <div class="skill-card">
-                        <i class="devicon-nodejs-plain colored"></i>
-                        <h5>Node.js</h5>
-                    </div>
-
-                    <div class="skill-card">
-                        <i class="devicon-mongodb-plain colored"></i>
-                        <h5>MongoDB</h5>
-                    </div>
-
-                    <div class="skill-card">
-                        <i class="devicon-tailwindcss-plain colored"></i>
-                        <h5>Tailwind</h5>
-                    </div>
-                </div>
-
+                <figure class="profile">
+                    <img src="src/Profile.png" alt="Profile Picture" class="h-auto">
+                </figure>
             </div>
+        </section>
 
-    </section>
+        <!-- ABOUT -->
+        <section id="about" class="about-section" aria-labelledby="about-title">
+            <h2 id="about-title" class="section-title">About Me</h2>
+            <div class="about-container">
+                <!-- LEFT -->
+                <aside class="left-side">
 
-    <!-- PROJECT -->
-        <section id="project" class="project-section">
-            <h1 class="section-title">My Project</h1>
+                    <div class="profile-wrapper">
+                        <figure class="profile-circle">
+                            <img src="src/Profile.png" alt="Profile Picture" class="h-auto">
+                        </figure>
+                    </div>
+
+                    <div class="toggle-btns">
+                        <button class="active" onclick="showExperience()">Experience</button>
+                        <button onclick="showEducation()">Education</button>
+                    </div>
+
+                    <div id="experience-content">
+                        <article class="timeline-item">
+                            <h4>Web Designer</h4>
+                            <span>2023</span>
+                            <p>During this period, I dedicated my time to exploring the role of a professional Web
+                                Designer with a focus on intuitive interfaces. I successfully translated client needs
+                                into
+                                functional and aesthetically appealing design prototypes with a modern touch.</p>
+                        </article>
+
+                        <article class="timeline-item">
+                            <h4>Web Developer</h4>
+                            <span>2024</span>
+                            <p>At the same time, I actively contribute as a Web Developer to turn designs into complete
+                                and
+                                functional digital products.
+                                I am responsible for building clean, responsive, and optimized code structures across
+                                various devices and browsers.</p>
+                        </article>
+                    </div>
+
+                    <div id="education-content" class="hidden">
+                        <article class="timeline-item">
+                            <h4>Informatics Student</h4>
+                            <span>2023 - Present</span>
+                            <p>I studied at university majoring in Informatics, where I specialized in web development.
+                                There, I also learned how computers and systems work.</p>
+                        </article>
+
+                        <article class="timeline-item">
+                            <h4>Web developer bootcamp</h4>
+                            <span>2025</span>
+                            <p>I completed intensive education in Web Development to deepen my mastery of modern
+                                technology
+                                and the latest web architecture.
+                                This program equipped me with a deep understanding of programming languages and
+                                frameworks
+                                that are the main standards in the digital industry. </p>
+                        </article>
+                    </div>
+
+                </aside>
+
+                <!-- RIGHT -->
+                <article class="right-side">
+                    <h2>My story</h2>
+                    <p>
+                        I am a web developer dedicated to building efficient and elegant digital solutions.
+                        With experience in design, I strive to translate client vision into intuitive interfaces.
+                        I believe that small details in code and visuals create real impact on user satisfaction.
+                    </p>
+
+                    <section id="skill" class="bg-white py-16 px-8">
+
+                        <div class="max-w-6xl mx-auto">
+
+                            <!-- Title -->
+                            <h2 class="text-3xl font-semibold text-gray-800 mb-10">
+                                Skill
+                            </h2>
+
+                            <!-- Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                                <!-- Card 1 -->
+                                <div
+                                    class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition duration-300 p-10 flex flex-col items-center justify-center">
+                                    <i class="devicon-react-original colored text-6xl mb-6"></i>
+                                    <h5 class="text-lg font-medium text-gray-700">
+                                        React
+                                    </h5>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div
+                                    class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition duration-300 p-10 flex flex-col items-center justify-center">
+                                    <i class="devicon-javascript-plain colored text-6xl mb-6"></i>
+                                    <h5 class="text-lg font-medium text-gray-700">
+                                        JavaScript
+                                    </h5>
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div
+                                    class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition duration-300 p-10 flex flex-col items-center justify-center">
+                                    <i class="devicon-nodejs-plain colored text-6xl mb-6"></i>
+                                    <h5 class="text-lg font-medium text-gray-700">
+                                        Node.js
+                                    </h5>
+                                </div>
+
+                                <!-- Card 4 -->
+                                <div
+                                    class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition duration-300 p-10 flex flex-col items-center justify-center">
+                                    <i class="devicon-tailwindcss-plain colored text-6xl mb-6"></i>
+                                    <h5 class="text-lg font-medium text-gray-700">
+                                        Tailwind
+                                    </h5>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </article>
+            </div>
+        </section>
+
+        <!-- PROJECT -->
+        <section id="project" class="project-section" aria-labelledby="project-title">
+            <h2 id="project-title" class="section-title">My Project</h2>
 
             <div class="project-grid" id="projectGrid">
 
                 <!-- PROJECT CARD -->
-                <div class="project-card">
+                <article class="project-card">
+                    <div class="project-img">
+                        <img src="src/Project1.png" alt="Project 1 Image" class="h-auto">
+                    </div>
+                    <p>A summary of my experience, expertise, and best projects in one digital space.</p>
+                    <div class="project-btns">
+                        <a href="#">Link</a>
+                        <a href="#">Github</a>
+                    </div>
+                </article>
+
+                <article class="project-card">
                     <div class="project-img"></div>
                     <p>This project is an interactive digital platform...</p>
                     <div class="project-btns">
                         <a href="#">Link</a>
                         <a href="#">Github</a>
                     </div>
-                </div>
+                </article>
 
-                <div class="project-card">
+                <article class="project-card">
                     <div class="project-img"></div>
                     <p>This project is an interactive digital platform...</p>
                     <div class="project-btns">
                         <a href="#">Link</a>
                         <a href="#">Github</a>
                     </div>
-                </div>
+                </article>
 
-                <div class="project-card">
-                    <div class="project-img"></div>
-                    <p>This project is an interactive digital platform...</p>
-                    <div class="project-btns">
-                        <a href="#">Link</a>
-                        <a href="#">Github</a>
-                    </div>
-                </div>
-
-                <!-- Tambahkan class hidden-project untuk yang mau disembunyikan dulu -->
-
-                <div class="project-card hidden-project">
+                <article class="project-card hidden-project">
                     <div class="project-img"></div>
                     <p>Another project description...</p>
                     <div class="project-btns">
                         <a href="#">Link</a>
                         <a href="#">Github</a>
                     </div>
-                </div>
+                </article>
 
             </div>
 
             <button id="toggleProjectBtn" class="more-btn">More</button>
         </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="contact-section">
-        <h1 class="contact-title">Contact</h1>
-        
-        <div class="contact-container">
-            <!-- FORM EMAIL -->
-            <div class="contact-form-wrapper">
-                <h2>Send me a message</h2>
-                <form class="contact-form" action="https://formspree.io/f/xjkgqknq" method="POST">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
+        <!-- CONTACT -->
+        <section id="contact" class="contact-section" aria-labelledby="contact-title">
+            <h2 id="contact-title" class="contact-title">Contact</h2>
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
+            <div class="contact-container">
+                <!-- FORM EMAIL -->
+                <article class="contact-form-wrapper">
+                    <h2>Send me a message</h2>
+                    <form class="contact-form" action="https://formspree.io/f/xjkgqknq" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
 
-                    <button type="submit" class="btn-submit">Send Message</button>
-                </form>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Send Message</button>
+                    </form>
+                </article>
+
+                <!-- SOCIAL MEDIA -->
+                <aside class="social-wrapper">
+                    <h2>Connect with me</h2>
+                    <div class="social-icons">
+                        <a href="https://instagram.com/masukan-link-disini" target="_blank" rel="noopener noreferrer"
+                            class="social-icon instagram" title="Instagram" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/masukan-link-disini" target="_blank" rel="noopener noreferrer"
+                            class="social-icon github" title="GitHub" aria-label="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                        <a href="https://wa.me/masukan-nomor-disini" target="_blank" rel="noopener noreferrer"
+                            class="social-icon whatsapp" title="WhatsApp" aria-label="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://linkedin.com/in/masukan-link-disini" target="_blank" rel="noopener noreferrer"
+                            class="social-icon linkedin" title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </aside>
             </div>
-
-            <!-- SOCIAL MEDIA -->
-            <div class="social-wrapper">
-      <h2>Connect with me</h2>
-                <div class="social-icons">
-                    <a href="https://instagram.com/masukan-link-disini" target="_blank" rel="noopener noreferrer" class="social-icon instagram" title="Instagram" aria-label="Instagram">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="https://github.com/masukan-link-disini" target="_blank" rel="noopener noreferrer" class="social-icon github" title="GitHub" aria-label="GitHub">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                    <a href="https://wa.me/masukan-nomor-disini" target="_blank" rel="noopener noreferrer" class="social-icon whatsapp" title="WhatsApp" aria-label="WhatsApp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/masukan-link-disini" target="_blank" rel="noopener noreferrer" class="social-icon linkedin" title="LinkedIn" aria-label="LinkedIn">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer class="site-footer">
         <p>&copy; 2026 Rangga. All rights reserved.</p>
-        <div class="footer-links">
+        <nav class="footer-links flex" aria-label="Footer navigation">
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#project">Project</a>
             <a href="#contact">Contact</a>
-        </div>
+        </nav>
     </footer>
+
     <script>
         // HAMBURGER MENU
         const hamburger = document.getElementById("hamburger");
