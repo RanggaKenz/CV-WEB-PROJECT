@@ -7,330 +7,458 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <title>Rangga - Web Portfolio</title>
+    <style type="text/tailwindcss">
+        body { font-family: 'Ubuntu', sans-serif; }
+
+        /* ── HAMBURGER ── */
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(10px, 10px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+        .hamburger.active { background: rgba(56,189,248,0.12); border-color: rgba(56,189,248,0.45); }
+
+        /* ── NAV ACTIVE BOX ── */
+        .active-box {
+            position: absolute; height: 100%; background: #38BDF8;
+            border-radius: 8px; top: 0; left: 0;
+            transition: left 0.3s ease, width 0.3s ease;
+            z-index: 1; pointer-events: none;
+        }
+        .nav-item.active { color: white; }
+
+        /* ── MOBILE NAV DROPDOWN ── */
+        .nav-links.mobile-active {
+            display: flex; flex-direction: column; position: fixed;
+            top: 65px; left: 0; right: 0; width: 100%; background: white;
+            padding: 15px; gap: 8px; z-index: 1099;
+            max-height: calc(100vh - 65px); overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: mobileMenuIn 0.22s ease;
+        }
+        @keyframes mobileMenuIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── FADE UP (hero) ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up       { animation: fadeUp 0.9s ease forwards; }
+        .animate-fade-up-delay { animation: fadeUp 0.9s ease 0.2s forwards; opacity: 0; }
+
+        /* ── TYPING CURSOR ── */
+        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+        .typing-cursor {
+            display: inline-block; width: 3px; height: 1em;
+            background: #38BDF8; margin-left: 2px;
+            vertical-align: text-bottom;
+            animation: blink 0.7s step-end infinite;
+        }
+
+        /* ── TOGGLE BTNS ── */
+        .toggle-btns button.active { background-color: #38BDF8; color: white; }
+
+        /* ── SCROLL REVEAL ── */
+        .reveal        { opacity:0; transform: translateY(36px);   transition: opacity .65s ease, transform .65s ease; }
+        .reveal-left   { opacity:0; transform: translateX(-36px);  transition: opacity .65s ease, transform .65s ease; }
+        .reveal-right  { opacity:0; transform: translateX(36px);   transition: opacity .65s ease, transform .65s ease; }
+        .reveal.visible, .reveal-left.visible, .reveal-right.visible { opacity:1; transform: translate(0); }
+
+        .delay-100 { transition-delay:.1s; }
+        .delay-200 { transition-delay:.2s; }
+        .delay-300 { transition-delay:.3s; }
+        .delay-400 { transition-delay:.4s; }
+
+        /* ── PROJECT CARD ── */
+        .project-card {
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(56,189,248,0.18);
+        }
+        .card-overlay { opacity:0; transition: opacity .3s ease; }
+        .project-card:hover .card-overlay { opacity:1; }
+
+        /* ── CONTACT INPUT ── */
+        .contact-input {
+            transition: border-color .3s ease, box-shadow .3s ease, transform .2s ease;
+        }
+        .contact-input:focus {
+            outline: none;
+            border-color: #38BDF8;
+            box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+            transform: scale(1.005);
+        }
+
+        /* ── SOCIAL CONTACT ICON ── */
+        .social-contact-icon {
+            transition: transform .3s ease, background .3s ease,
+                        border-color .3s ease, box-shadow .3s ease, color .3s ease;
+        }
+        .social-contact-icon:hover {
+            background: #38BDF8 !important; border-color: #38BDF8 !important;
+            transform: translateY(-8px) rotate(5deg);
+            box-shadow: 0 10px 25px rgba(56,189,248,0.35);
+            color: white !important;
+        }
+        .social-contact-icon:hover i { color: white !important; }
+
+        /* ══════ RESPONSIVE ══════ */
+
+        /* Tablet ≤ 992px */
+        @media (max-width: 992px) {
+            .about-layout  { flex-direction: column !important; align-items:center !important; gap:40px !important; }
+            .about-left    { width:100% !important; }
+            .about-right   { width:100% !important; padding-left:0 !important; }
+        }
+
+        /* Mobile ≤ 768px */
+        @media (max-width: 768px) {
+            .navbar-inner  { padding: 12px 16px !important; }
+            .nav-links { display: none !important; }
+            .nav-links.mobile-active { display: flex !important; }
+            .nav-links .active-box { display: none !important; }
+            .nav-links li { width: 100%; }
+            .nav-links .nav-item { display: block; width: 100%; }
+            .nav-links .nav-item.active {
+                background: #38BDF8 !important;
+                color: #ffffff !important;
+            }
+            .home-layout   { flex-direction: column-reverse; gap:24px !important; }
+            .home-layout article { text-align:center; }
+            .home-social   { justify-content:center !important; }
+            .home-profile  { width:180px !important; height:180px !important; }
+            .home-title    { font-size:30px !important; }
+            .home-sub      { font-size:24px !important; }
+            .home-desc     { margin: 0 auto 24px !important; font-size:15px; }
+            .contact-grid  { grid-template-columns: 1fr !important; }
+            .footer-inner  { justify-content:center !important; text-align:center; }
+            .footer-nav    { justify-content:center !important; width:100%; }
+        }
+
+        /* Small mobile ≤ 480px */
+        @media (max-width: 480px) {
+            .navbar-inner  { padding: 10px 12px !important; }
+            .home-title    { font-size:26px !important; }
+            .home-sub      { font-size:20px !important; }
+            .home-profile  { width:150px !important; height:150px !important; }
+        }
+    </style>
 </head>
 
-<body class="antialiased scroll-smooth">
+<body class="antialiased scroll-smooth bg-slate-100 text-[#2D3748] overflow-x-hidden pt-20">
 
-    <header class="block">
-        <!-- NAVBAR -->
-        <nav class="navbar w-full" aria-label="Primary navigation">
-            <p class="nav-name">Rangga</p>
+    <!-- ═══ NAVBAR ═══ -->
+    <header>
+        <nav class="navbar-inner fixed top-0 left-0 right-0 z-[1000] flex justify-between items-center px-[60px] py-5 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)] gap-4 flex-wrap"
+            aria-label="Primary navigation">
 
-            <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Toggle navigation menu"
-                aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <p class="text-[22px] font-semibold text-sky-400">Rangga</p>
 
-            <ul class="nav-links" id="navLinks">
+            <button class="hamburger hidden flex-col cursor-pointer gap-[6px] p-2 rounded-[10px] border border-transparent transition-all duration-200 hover:bg-sky-100 hover:border-sky-300 relative z-[1102]"
+                id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="w-[25px] h-[3px] bg-[#2D3748] rounded-sm transition-all duration-300"></span>
+                <span class="w-[25px] h-[3px] bg-[#2D3748] rounded-sm transition-all duration-300"></span>
+                <span class="w-[25px] h-[3px] bg-[#2D3748] rounded-sm transition-all duration-300"></span>
+            </button>
+
+            <ul class="nav-links relative flex flex-wrap gap-[30px] list-none" id="navLinks">
                 <li class="active-box" aria-hidden="true"></li>
-                <li><a href="#home" class="nav-item active">Home</a></li>
-                <li><a href="#about" class="nav-item">About</a></li>
-                <li><a href="#project" class="nav-item">Project</a></li>
-                <li><a href="#contact" class="nav-item">Contact</a></li>
+                <li><a href="#home"    class="nav-item active text-[#2D3748] px-[15px] py-2 relative z-[2] rounded-lg transition-all duration-200 hover:text-sky-400 hover:bg-sky-50 no-underline">Home</a></li>
+                <li><a href="#about"   class="nav-item        text-[#2D3748] px-[15px] py-2 relative z-[2] rounded-lg transition-all duration-200 hover:text-sky-400 hover:bg-sky-50 no-underline">About</a></li>
+                <li><a href="#project" class="nav-item        text-[#2D3748] px-[15px] py-2 relative z-[2] rounded-lg transition-all duration-200 hover:text-sky-400 hover:bg-sky-50 no-underline">Project</a></li>
+                <li><a href="#contact" class="nav-item        text-[#2D3748] px-[15px] py-2 relative z-[2] rounded-lg transition-all duration-200 hover:text-sky-400 hover:bg-sky-50 no-underline">Contact</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="block">
-        <!-- HOME -->
-        <section id="home" class="home-section" aria-labelledby="home-title">
-            <div class="home-content w-full">
-                <article class="home-text">
-                    <h1 id="home-title" class="home-title">Hi, I'm Rangga</h1>
-                    <h2 class="home-subtitle">I'm a <span>Web Developer</span></h2>
+    <main>
 
-                    <p class="home-desc">
+        <!-- ═══ HOME ═══ -->
+        <section id="home" class="px-[8%] py-20 bg-slate-100 min-h-[90vh] flex items-center"
+            aria-labelledby="home-title">
+            <div class="home-layout w-full max-w-[1100px] mx-auto flex items-center justify-between gap-[50px]">
+
+                <article class="flex-1 animate-fade-up">
+                    <h1 id="home-title" class="home-title text-[42px] font-bold mb-[10px]">Hi, I'm Rangga</h1>
+                    <h2 class="home-sub text-[36px] font-semibold mb-5">
+                        I'm a&nbsp;<span id="typing-text" class="text-sky-400 font-semibold"></span><span class="typing-cursor"></span>
+                    </h2>
+                    <p class="home-desc max-w-[500px] mb-[30px] leading-relaxed text-lg">
                         Welcome to my portfolio where creativity meets precision technical functionality.
                         I focus on developing seamless user experiences and clean, modern visual designs.
                         Every project is an opportunity to create unique solutions that make a real impact.
                     </p>
 
-                    <div class="home-social-icons">
+                    <div class="home-social flex gap-4 mb-5 flex-wrap">
                         <a href="https://instagram.com/masukan-link-disini" target="_blank" rel="noopener noreferrer"
-                            class="social-icon instagram" title="Instagram" aria-label="Instagram">
-                            <i class="fa-brands fa-instagram"></i>
+                            class="inline-flex items-center justify-center w-[58px] h-[58px] bg-white rounded-full border-2 border-sky-200 text-[#e4405f] no-underline transition-all duration-300 hover:bg-sky-400 hover:border-sky-400 hover:-translate-y-2 hover:rotate-6 hover:shadow-[0_10px_25px_rgba(56,189,248,0.3)] hover:text-white"
+                            title="Instagram" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram text-[26px]"></i>
                         </a>
                         <a href="https://github.com/masukan-link-disini" target="_blank" rel="noopener noreferrer"
-                            class="social-icon github" title="GitHub" aria-label="GitHub">
-                            <i class="fa-brands fa-github"></i>
+                            class="inline-flex items-center justify-center w-[58px] h-[58px] bg-white rounded-full border-2 border-sky-200 text-[#111827] no-underline transition-all duration-300 hover:bg-sky-400 hover:border-sky-400 hover:-translate-y-2 hover:rotate-6 hover:shadow-[0_10px_25px_rgba(56,189,248,0.3)] hover:text-white"
+                            title="GitHub" aria-label="GitHub">
+                            <i class="fa-brands fa-github text-[26px]"></i>
                         </a>
                         <a href="https://wa.me/masukan-nomor-disini" target="_blank" rel="noopener noreferrer"
-                            class="social-icon whatsapp" title="WhatsApp" aria-label="WhatsApp">
-                            <i class="fa-brands fa-whatsapp"></i>
+                            class="inline-flex items-center justify-center w-[58px] h-[58px] bg-white rounded-full border-2 border-sky-200 text-[#25d366] no-underline transition-all duration-300 hover:bg-sky-400 hover:border-sky-400 hover:-translate-y-2 hover:rotate-6 hover:shadow-[0_10px_25px_rgba(56,189,248,0.3)] hover:text-white"
+                            title="WhatsApp" aria-label="WhatsApp">
+                            <i class="fa-brands fa-whatsapp text-[26px]"></i>
                         </a>
                         <a href="https://linkedin.com/in/masukan-link-disini" target="_blank" rel="noopener noreferrer"
-                            class="social-icon linkedin" title="LinkedIn" aria-label="LinkedIn">
-                            <i class="fa-brands fa-linkedin-in"></i>
+                            class="inline-flex items-center justify-center w-[58px] h-[58px] bg-white rounded-full border-2 border-sky-200 text-[#0a66c2] no-underline transition-all duration-300 hover:bg-sky-400 hover:border-sky-400 hover:-translate-y-2 hover:rotate-6 hover:shadow-[0_10px_25px_rgba(56,189,248,0.3)] hover:text-white"
+                            title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in text-[26px]"></i>
                         </a>
                     </div>
 
-                    <a href="src/CV.pdf" download class="button-cv inline-block">
+                    <a href="src/CV.pdf" download
+                        class="inline-block px-10 py-[14px] bg-sky-400 text-white rounded-lg no-underline transition-all duration-300 mt-5 hover:opacity-80 hover:-translate-y-0.5 hover:shadow-lg">
                         Download CV
                     </a>
                 </article>
 
-                <figure class="profile">
-                    <img src="src/Profile.png" alt="Profile Picture" class="h-auto">
+                <figure class="home-profile flex-shrink-0 w-[420px] h-[420px] m-0 rounded-full overflow-hidden border-[3px] border-sky-400 animate-fade-up-delay shadow-[0_0_40px_rgba(56,189,248,0.2)]">
+                    <img src="src/Profile.png" alt="Profile Picture" class="w-full h-full object-cover">
                 </figure>
             </div>
         </section>
 
-        <!-- ABOUT -->
-        <section id="about" class="about-section" aria-labelledby="about-title">
-            <h2 id="about-title" class="section-title">About Me</h2>
-            <div class="about-container">
+        <!-- ═══ ABOUT ═══ -->
+        <section id="about" class="px-[8%] py-[60px] bg-white" aria-labelledby="about-title">
+
+            <!-- Title + foto di tengah -->
+            <div class="reveal flex flex-col items-center mb-[50px]">
+                <h2 id="about-title" class="text-[32px] font-bold mb-7">About Me</h2>
+                <figure class="w-[200px] h-[200px] rounded-full border-[8px] border-sky-200 overflow-hidden shadow-lg">
+                    <img src="src/Profile.png" alt="Profile Picture" class="w-full h-full object-cover">
+                </figure>
+            </div>
+
+            <div class="about-layout flex gap-20 items-start">
+
                 <!-- LEFT -->
-                <aside class="left-side">
-
-                    <div class="profile-wrapper">
-                        <figure class="profile-circle">
-                            <img src="src/Profile.png" alt="Profile Picture" class="h-auto">
-                        </figure>
+                <aside class="about-left w-[44%] flex flex-col items-center reveal-left">
+                    <div class="toggle-btns flex justify-center mb-9">
+                        <button class="active px-[22px] py-[10px] border border-sky-400 bg-transparent cursor-pointer text-base font-medium transition-all duration-300 rounded-l"
+                            onclick="showExperience()">Experience</button>
+                        <button class="px-[22px] py-[10px] border border-sky-400 bg-transparent cursor-pointer text-base font-medium transition-all duration-300 rounded-r"
+                            onclick="showEducation()">Education</button>
                     </div>
 
-                    <div class="toggle-btns">
-                        <button class="active" onclick="showExperience()">Experience</button>
-                        <button onclick="showEducation()">Education</button>
-                    </div>
-
-                    <div id="experience-content">
-                        <article class="timeline-item">
-                            <h4>Web Designer</h4>
-                            <span>2023</span>
-                            <p>During this period, I dedicated my time to exploring the role of a professional Web
-                                Designer with a focus on intuitive interfaces. I successfully translated client needs
-                                into
-                                functional and aesthetically appealing design prototypes with a modern touch.</p>
+                    <div id="experience-content" class="w-full">
+                        <article class="relative w-full max-w-[560px] pl-7 mb-9 border-l-4 border-sky-400">
+                            <h4 class="text-[23px] font-bold">Web Designer</h4>
+                            <span class="text-base text-sky-400 block my-2">2023</span>
+                            <p class="text-[17px] text-gray-500 leading-[1.8]">During this period, I dedicated my time to exploring the role of a professional Web Designer with a focus on intuitive interfaces. I successfully translated client needs into functional and aesthetically appealing design prototypes with a modern touch.</p>
                         </article>
-
-                        <article class="timeline-item">
-                            <h4>Web Developer</h4>
-                            <span>2024</span>
-                            <p>At the same time, I actively contribute as a Web Developer to turn designs into complete
-                                and
-                                functional digital products.
-                                I am responsible for building clean, responsive, and optimized code structures across
-                                various devices and browsers.</p>
+                        <article class="relative w-full max-w-[560px] pl-7 mb-9 border-l-4 border-sky-400">
+                            <h4 class="text-[23px] font-bold">Web Developer</h4>
+                            <span class="text-base text-sky-400 block my-2">2024</span>
+                            <p class="text-[17px] text-gray-500 leading-[1.8]">At the same time, I actively contribute as a Web Developer to turn designs into complete and functional digital products. I am responsible for building clean, responsive, and optimized code structures across various devices and browsers.</p>
                         </article>
                     </div>
 
-                    <div id="education-content" class="hidden">
-                        <article class="timeline-item">
-                            <h4>Informatics Student</h4>
-                            <span>2023 - Present</span>
-                            <p>I studied at university majoring in Informatics, where I specialized in web development.
-                                There, I also learned how computers and systems work.</p>
+                    <div id="education-content" class="hidden w-full">
+                        <article class="relative w-full max-w-[560px] pl-7 mb-9 border-l-4 border-sky-400">
+                            <h4 class="text-[23px] font-bold">Informatics Student</h4>
+                            <span class="text-base text-sky-400 block my-2">2023 - Present</span>
+                            <p class="text-[17px] text-gray-500 leading-[1.8]">I studied at university majoring in Informatics, where I specialized in web development. There, I also learned how computers and systems work.</p>
                         </article>
-
-                        <article class="timeline-item">
-                            <h4>Web developer bootcamp</h4>
-                            <span>2025</span>
-                            <p>I completed intensive education in Web Development to deepen my mastery of modern
-                                technology
-                                and the latest web architecture.
-                                This program equipped me with a deep understanding of programming languages and
-                                frameworks
-                                that are the main standards in the digital industry. </p>
+                        <article class="relative w-full max-w-[560px] pl-7 mb-9 border-l-4 border-sky-400">
+                            <h4 class="text-[23px] font-bold">Web developer bootcamp</h4>
+                            <span class="text-base text-sky-400 block my-2">2025</span>
+                            <p class="text-[17px] text-gray-500 leading-[1.8]">I completed intensive education in Web Development to deepen my mastery of modern technology and the latest web architecture. This program equipped me with a deep understanding of programming languages and frameworks that are the main standards in the digital industry.</p>
                         </article>
                     </div>
-
                 </aside>
 
                 <!-- RIGHT -->
-                <article class="right-side">
-                    <h2>My story</h2>
-                    <p>
+                <article class="about-right w-[56%] pl-6 reveal-right">
+                    <h2 class="text-[44px] font-bold mb-[18px]">My story</h2>
+                    <p class="text-[19px] text-gray-500 leading-[1.9] mb-[46px] max-w-[760px]">
                         I am a web developer dedicated to building efficient and elegant digital solutions.
                         With experience in design, I strive to translate client vision into intuitive interfaces.
                         I believe that small details in code and visuals create real impact on user satisfaction.
                     </p>
 
-                    <section id="skill" class="bg-white py-16 px-8">
-
-                        <div class="max-w-6xl mx-auto">
-
-                            <!-- Title -->
-                            <h2 class="text-3xl font-semibold text-gray-800 mb-10">
-                                Skill
-                            </h2>
-
-                            <!-- Grid -->
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
-                                <!-- Card 1 -->
-                                <div
-                                    class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition duration-300 p-10 flex flex-col items-center justify-center">
-                                    <i class="devicon-react-original colored text-6xl mb-6"></i>
-                                    <h5 class="text-lg font-medium text-gray-700">
-                                        React
-                                    </h5>
-                                </div>
-
-                                <!-- Card 2 -->
-                                <div
-                                    class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition duration-300 p-10 flex flex-col items-center justify-center">
-                                    <i class="devicon-javascript-plain colored text-6xl mb-6"></i>
-                                    <h5 class="text-lg font-medium text-gray-700">
-                                        JavaScript
-                                    </h5>
-                                </div>
-
-                                <!-- Card 3 -->
-                                <div
-                                    class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition duration-300 p-10 flex flex-col items-center justify-center">
-                                    <i class="devicon-nodejs-plain colored text-6xl mb-6"></i>
-                                    <h5 class="text-lg font-medium text-gray-700">
-                                        Node.js
-                                    </h5>
-                                </div>
-
-                                <!-- Card 4 -->
-                                <div
-                                    class="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition duration-300 p-10 flex flex-col items-center justify-center">
-                                    <i class="devicon-tailwindcss-plain colored text-6xl mb-6"></i>
-                                    <h5 class="text-lg font-medium text-gray-700">
-                                        Tailwind
-                                    </h5>
-                                </div>
-
+                    <!-- SKILLS
+                         Desktop: 4 cols | Tablet: 2 cols | Mobile: 2 cols (2×2 grid) -->
+                    <section id="skill" aria-labelledby="skill-title">
+                        <h2 id="skill-title" class="text-3xl font-semibold text-gray-800 mb-8">Skill</h2>
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+                            <div class="reveal delay-100 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center">
+                                <i class="devicon-react-original colored text-5xl mb-4"></i>
+                                <h5 class="text-base font-medium text-gray-700">React</h5>
                             </div>
-
+                            <div class="reveal delay-200 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center">
+                                <i class="devicon-javascript-plain colored text-5xl mb-4"></i>
+                                <h5 class="text-base font-medium text-gray-700">JavaScript</h5>
+                            </div>
+                            <div class="reveal delay-300 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center">
+                                <i class="devicon-nodejs-plain colored text-5xl mb-4"></i>
+                                <h5 class="text-base font-medium text-gray-700">Node.js</h5>
+                            </div>
+                            <div class="reveal delay-400 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center">
+                                <i class="devicon-tailwindcss-plain colored text-5xl mb-4"></i>
+                                <h5 class="text-base font-medium text-gray-700">Tailwind</h5>
+                            </div>
                         </div>
-
                     </section>
-
-                </article>
-            </div>
-        </section>
-
-        <!-- PROJECT -->
-        <section id="project" class="project-section" aria-labelledby="project-title">
-            <h2 id="project-title" class="section-title">My Project</h2>
-
-            <div class="project-grid" id="projectGrid">
-
-                <!-- PROJECT CARD -->
-                <article class="project-card">
-                    <div class="project-img">
-                        <img src="src/Project1.png" alt="Project 1 Image" class="h-auto">
-                    </div>
-                    <p>A summary of my experience, expertise, and best projects in one digital space.</p>
-                    <div class="project-btns">
-                        <a href="#">Link</a>
-                        <a href="#">Github</a>
-                    </div>
-                </article>
-
-                <article class="project-card">
-                    <div class="project-img"></div>
-                    <p>This project is an interactive digital platform...</p>
-                    <div class="project-btns">
-                        <a href="#">Link</a>
-                        <a href="#">Github</a>
-                    </div>
-                </article>
-
-                <article class="project-card">
-                    <div class="project-img"></div>
-                    <p>This project is an interactive digital platform...</p>
-                    <div class="project-btns">
-                        <a href="#">Link</a>
-                        <a href="#">Github</a>
-                    </div>
-                </article>
-
-                <article class="project-card hidden-project">
-                    <div class="project-img"></div>
-                    <p>Another project description...</p>
-                    <div class="project-btns">
-                        <a href="#">Link</a>
-                        <a href="#">Github</a>
-                    </div>
                 </article>
 
             </div>
-
-            <button id="toggleProjectBtn" class="more-btn">More</button>
         </section>
 
-        <!-- CONTACT -->
-        <section id="contact" class="contact-section" aria-labelledby="contact-title">
-            <h2 id="contact-title" class="contact-title">Contact</h2>
+        <!-- ═══ PROJECT ═══ -->
+        <section id="project" class="bg-slate-100 px-[8%] py-20 text-center" aria-labelledby="project-title">
+            <h2 id="project-title" class="reveal text-center text-[32px] font-bold mb-[50px]">My Project</h2>
 
-            <div class="contact-container">
-                <!-- FORM EMAIL -->
-                <article class="contact-form-wrapper">
-                    <h2>Send me a message</h2>
-                    <form class="contact-form" action="https://formspree.io/f/xjkgqknq" method="POST">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
+            <div class="grid gap-8 mt-[50px]" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));" id="projectGrid">
+
+                <article class="project-card reveal delay-100 bg-white p-[25px] rounded-2xl text-left relative overflow-hidden">
+                    <div class="h-[180px] bg-gray-200 rounded-[14px] mb-5 overflow-hidden relative">
+                        <img src="src/Project1.png" alt="Project 1 Image" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-[14px]"></div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-5 text-gray-600">A summary of my experience, expertise, and best projects in one digital space.</p>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Link</a>
+                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Github</a>
+                    </div>
+                </article>
+
+                <article class="project-card reveal delay-200 bg-white p-[25px] rounded-2xl text-left relative overflow-hidden">
+                    <div class="h-[180px] bg-gray-200 rounded-[14px] mb-5 relative">
+                        <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-[14px]"></div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-5 text-gray-600">This project is an interactive digital platform...</p>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Link</a>
+                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Github</a>
+                    </div>
+                </article>
+
+                <article class="project-card reveal delay-300 bg-white p-[25px] rounded-2xl text-left relative overflow-hidden">
+                    <div class="h-[180px] bg-gray-200 rounded-[14px] mb-5 relative">
+                        <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-[14px]"></div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-5 text-gray-600">This project is an interactive digital platform...</p>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Link</a>
+                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Github</a>
+                    </div>
+                </article>
+
+                <article class="hidden-project hidden project-card bg-white p-[25px] rounded-2xl text-left relative overflow-hidden">
+                    <div class="h-[180px] bg-gray-200 rounded-[14px] mb-5 relative">
+                        <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-[14px]"></div>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-5 text-gray-600">Another project description...</p>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Link</a>
+                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Github</a>
+                    </div>
+                </article>
+
+            </div>
+
+            <button id="toggleProjectBtn"
+                class="reveal mt-[50px] px-10 py-3 bg-sky-400 border-none rounded-xl text-lg text-white cursor-pointer transition-all duration-300 hover:opacity-80 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
+                More
+            </button>
+        </section>
+
+        <!-- ═══ CONTACT ═══ -->
+        <section id="contact" class="bg-white px-[8%] py-20 text-center" aria-labelledby="contact-title">
+            <h2 id="contact-title" class="reveal text-[36px] font-bold text-[#2D3748] mb-[60px]">Contact</h2>
+
+            <div class="contact-grid grid gap-[60px] max-w-[1000px] mx-auto" style="grid-template-columns: 1fr 1fr;">
+
+                <!-- FORM -->
+                <article class="reveal-left text-left">
+                    <h2 class="text-[22px] font-semibold text-[#2D3748] mb-[30px] text-center">Send me a message</h2>
+                    <form class="flex flex-col gap-5" action="https://formspree.io/f/xjkgqknq" method="POST">
+                        <div class="flex flex-col items-start gap-2">
+                            <label for="name" class="font-semibold text-[#2D3748] text-sm">Name</label>
+                            <input type="text" id="name" name="name" required
+                                class="contact-input w-full px-[15px] py-3 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748]">
                         </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
+                        <div class="flex flex-col items-start gap-2">
+                            <label for="email" class="font-semibold text-[#2D3748] text-sm">Email</label>
+                            <input type="email" id="email" name="email" required
+                                class="contact-input w-full px-[15px] py-3 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748]">
                         </div>
-
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
+                        <div class="flex flex-col items-start gap-2">
+                            <label for="message" class="font-semibold text-[#2D3748] text-sm">Message</label>
+                            <textarea id="message" name="message" rows="5" required
+                                class="contact-input w-full px-[15px] py-3 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748] resize-y min-h-[120px]"></textarea>
                         </div>
-
-                        <button type="submit" class="btn-submit">Send Message</button>
+                        <button type="submit"
+                            class="px-10 py-[14px] bg-sky-400 text-white border-none rounded-lg font-semibold text-base cursor-pointer transition-all duration-300 hover:opacity-85 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
+                            Send Message
+                        </button>
                     </form>
                 </article>
 
-                <!-- SOCIAL MEDIA -->
-                <aside class="social-wrapper">
-                    <h2>Connect with me</h2>
-                    <div class="social-icons">
+                <!-- SOCIAL -->
+                <aside class="reveal-right flex flex-col justify-center items-center">
+                    <h2 class="text-[22px] font-semibold text-[#2D3748] mb-[30px] text-center">Connect with me</h2>
+                    <div class="flex gap-6 flex-wrap justify-center">
                         <a href="https://instagram.com/masukan-link-disini" target="_blank" rel="noopener noreferrer"
-                            class="social-icon instagram" title="Instagram" aria-label="Instagram">
-                            <i class="fa-brands fa-instagram"></i>
+                            class="social-contact-icon inline-flex items-center justify-center w-[65px] h-[65px] bg-white rounded-full border-2 border-sky-200 text-[#e4405f] no-underline"
+                            title="Instagram" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram text-[30px]"></i>
                         </a>
                         <a href="https://github.com/masukan-link-disini" target="_blank" rel="noopener noreferrer"
-                            class="social-icon github" title="GitHub" aria-label="GitHub">
-                            <i class="fa-brands fa-github"></i>
+                            class="social-contact-icon inline-flex items-center justify-center w-[65px] h-[65px] bg-white rounded-full border-2 border-sky-200 text-[#111827] no-underline"
+                            title="GitHub" aria-label="GitHub">
+                            <i class="fa-brands fa-github text-[30px]"></i>
                         </a>
                         <a href="https://wa.me/masukan-nomor-disini" target="_blank" rel="noopener noreferrer"
-                            class="social-icon whatsapp" title="WhatsApp" aria-label="WhatsApp">
-                            <i class="fa-brands fa-whatsapp"></i>
+                            class="social-contact-icon inline-flex items-center justify-center w-[65px] h-[65px] bg-white rounded-full border-2 border-sky-200 text-[#25d366] no-underline"
+                            title="WhatsApp" aria-label="WhatsApp">
+                            <i class="fa-brands fa-whatsapp text-[30px]"></i>
                         </a>
                         <a href="https://linkedin.com/in/masukan-link-disini" target="_blank" rel="noopener noreferrer"
-                            class="social-icon linkedin" title="LinkedIn" aria-label="LinkedIn">
-                            <i class="fa-brands fa-linkedin-in"></i>
+                            class="social-contact-icon inline-flex items-center justify-center w-[65px] h-[65px] bg-white rounded-full border-2 border-sky-200 text-[#0a66c2] no-underline"
+                            title="LinkedIn" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in text-[30px]"></i>
                         </a>
                     </div>
                 </aside>
+
             </div>
         </section>
+
     </main>
 
-    <footer class="site-footer">
-        <p>&copy; 2026 Rangga. All rights reserved.</p>
-        <nav class="footer-links flex" aria-label="Footer navigation">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#project">Project</a>
-            <a href="#contact">Contact</a>
-        </nav>
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="bg-gray-900 text-gray-200 px-[8%] py-6">
+        <div class="footer-inner flex justify-between items-center flex-wrap gap-4">
+            <p class="m-0 text-sm">&copy; 2026 Rangga. All rights reserved.</p>
+            <nav class="footer-nav flex gap-[18px] flex-wrap" aria-label="Footer navigation">
+                <a href="#home"    class="text-gray-200 no-underline text-sm transition-colors duration-200 hover:text-sky-400">Home</a>
+                <a href="#about"   class="text-gray-200 no-underline text-sm transition-colors duration-200 hover:text-sky-400">About</a>
+                <a href="#project" class="text-gray-200 no-underline text-sm transition-colors duration-200 hover:text-sky-400">Project</a>
+                <a href="#contact" class="text-gray-200 no-underline text-sm transition-colors duration-200 hover:text-sky-400">Contact</a>
+            </nav>
+        </div>
     </footer>
 
     <script>
-        // HAMBURGER MENU
+        /* ══ NAVBAR ══ */
         const hamburger = document.getElementById("hamburger");
-        const navLinks = document.getElementById("navLinks");
-        const navItems = document.querySelectorAll(".nav-item");
+        const navLinks  = document.getElementById("navLinks");
+        const navItems  = document.querySelectorAll(".nav-item");
         const activeBox = document.querySelector(".active-box");
 
-        function isMobileView() {
-            return window.matchMedia("(max-width: 768px)").matches;
-        }
+        const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
 
         function closeMobileMenu() {
             hamburger.classList.remove("active");
@@ -338,96 +466,107 @@
             hamburger.setAttribute("aria-expanded", "false");
         }
 
-        hamburger.addEventListener("click", function () {
+        function syncHamburger() {
+            hamburger.style.display = isMobile() ? "flex" : "none";
+            if (!isMobile()) closeMobileMenu();
+        }
+
+        syncHamburger();
+        window.addEventListener("resize", syncHamburger);
+
+        hamburger.addEventListener("click", () => {
             hamburger.classList.toggle("active");
             navLinks.classList.toggle("mobile-active");
-            const expanded = hamburger.classList.contains("active");
-            hamburger.setAttribute("aria-expanded", String(expanded));
+            hamburger.setAttribute("aria-expanded", String(hamburger.classList.contains("active")));
         });
 
-        hamburger.addEventListener("keydown", function (event) {
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                hamburger.click();
-            }
+        hamburger.addEventListener("keydown", e => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); hamburger.click(); }
         });
 
-        // Close menu when a link is clicked
-        navItems.forEach(item => {
-            item.addEventListener("click", function () {
-                if (isMobileView()) {
-                    closeMobileMenu();
-                }
-            });
-        });
-
-        // NAVBAR ACTIVE BOX ANIMATION
-        function moveBox(element) {
-            if (!activeBox || isMobileView()) return;
-            const { offsetLeft, offsetWidth } = element;
-            activeBox.style.left = offsetLeft + "px";
-            activeBox.style.width = offsetWidth + "px";
+        function moveBox(el) {
+            if (!activeBox || isMobile()) return;
+            activeBox.style.left  = el.offsetLeft + "px";
+            activeBox.style.width = el.offsetWidth + "px";
         }
 
         navItems.forEach(item => {
             item.addEventListener("click", function () {
+                if (isMobile()) closeMobileMenu();
                 navItems.forEach(i => i.classList.remove("active"));
                 this.classList.add("active");
                 moveBox(this);
             });
         });
 
-        window.onload = () => {
-            moveBox(document.querySelector(".active"));
-        };
+        window.addEventListener("load",   () => { const a = document.querySelector(".nav-item.active"); if (a) moveBox(a); });
+        window.addEventListener("resize", () => { const a = document.querySelector(".nav-item.active"); if (a && !isMobile()) moveBox(a); });
 
-        window.addEventListener("resize", () => {
-            if (!isMobileView()) {
-                closeMobileMenu();
-                moveBox(document.querySelector(".active"));
-            }
+        document.addEventListener("click", e => {
+            if (!isMobile()) return;
+            if (!e.target.closest("nav") && navLinks.classList.contains("mobile-active")) closeMobileMenu();
         });
 
-        document.addEventListener("click", (event) => {
-            if (!isMobileView()) return;
-            const clickedInsideNav = event.target.closest(".navbar");
-            if (!clickedInsideNav && navLinks.classList.contains("mobile-active")) {
-                closeMobileMenu();
-            }
-        });
+        /* ══ TYPING ANIMATION ══ */
+        const typingEl = document.getElementById("typing-text");
+        const words    = ["Web Developer", "UI Designer", "Freelancer"];
+        let wi = 0, ci = 0, deleting = false;
 
+        function typeLoop() {
+            const word    = words[wi];
+            const current = deleting ? word.slice(0, ci--) : word.slice(0, ci++);
+            typingEl.textContent = current;
+
+            let delay = deleting ? 60 : 110;
+
+            if (!deleting && ci > word.length) {
+                delay = 1800; deleting = true;
+            } else if (deleting && ci < 0) {
+                deleting = false; ci = 0;
+                wi = (wi + 1) % words.length;
+                delay = 400;
+            }
+            setTimeout(typeLoop, delay);
+        }
+        typeLoop();
+
+        /* ══ SCROLL REVEAL ══ */
+        const revealEls = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
+        const observer  = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+        }, { threshold: 0.12 });
+
+        revealEls.forEach(el => observer.observe(el));
+
+        /* ══ TOGGLE EXPERIENCE / EDUCATION ══ */
         function showExperience() {
             document.getElementById("experience-content").classList.remove("hidden");
             document.getElementById("education-content").classList.add("hidden");
-
             document.querySelectorAll(".toggle-btns button")[0].classList.add("active");
             document.querySelectorAll(".toggle-btns button")[1].classList.remove("active");
         }
-
         function showEducation() {
             document.getElementById("education-content").classList.remove("hidden");
             document.getElementById("experience-content").classList.add("hidden");
-
             document.querySelectorAll(".toggle-btns button")[1].classList.add("active");
             document.querySelectorAll(".toggle-btns button")[0].classList.remove("active");
         }
 
-        const toggleBtn = document.getElementById("toggleProjectBtn");
+        /* ══ TOGGLE MORE PROJECTS ══ */
+        const toggleBtn      = document.getElementById("toggleProjectBtn");
         const hiddenProjects = document.querySelectorAll(".hidden-project");
-
         let expanded = false;
 
         toggleBtn.addEventListener("click", () => {
             expanded = !expanded;
-
-            hiddenProjects.forEach(project => {
-                project.style.display = expanded ? "block" : "none";
+            hiddenProjects.forEach(p => {
+                p.style.display = expanded ? "block" : "none";
+                if (expanded) setTimeout(() => p.classList.add("visible"), 50);
+                else          p.classList.remove("visible");
             });
-
             toggleBtn.textContent = expanded ? "Show Less" : "More";
         });
     </script>
 
 </body>
-
 </html>
