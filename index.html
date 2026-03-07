@@ -94,7 +94,29 @@
             transform: scale(1.005);
         }
 
-        /* ── SOCIAL CONTACT ICON ── */
+        /* ── NAV CONTAINER ── */
+        .nav-container { max-width: 1160px; margin: 0 auto; width: 100%; }
+
+        /* ── TOAST NOTIFICATION ── */
+        #toast {
+            position: fixed; bottom: 32px; right: 32px; z-index: 9999;
+            display: flex; align-items: center; gap: 12px;
+            background: #fff; border: 1.5px solid #bae6fd;
+            border-radius: 14px; padding: 16px 22px;
+            box-shadow: 0 8px 32px rgba(56,189,248,0.18);
+            transform: translateY(20px); opacity: 0;
+            transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.35s ease;
+            pointer-events: none;
+        }
+        #toast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+        #toast .toast-icon {
+            width: 36px; height: 36px; background: #e0f7fa;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* ── SECTION CONTAINER ── */
+        .section-container { max-width: 1160px; margin: 0 auto; width: 100%; }
         .social-contact-icon {
             transition: transform .3s ease, background .3s ease,
                         border-color .3s ease, box-shadow .3s ease, color .3s ease;
@@ -107,12 +129,112 @@
         }
         .social-contact-icon:hover i { color: white !important; }
 
+        /* ══════ HERO VISUAL ENHANCEMENTS ══════ */
+
+        /* Hero gradient background */
+        #home {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 40%, #eef6ff 70%, #f5f9ff 100%) !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dot pattern overlay */
+        #home::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(56,189,248,0.18) 1.2px, transparent 1.2px);
+            background-size: 28px 28px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Soft ambient glow - left */
+        #home::after {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: -80px;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(56,189,248,0.10) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ensure hero content sits above decorative layers */
+        #home .home-layout {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Soft blur blob behind profile image */
+        .hero-profile-wrapper {
+            position: relative;
+        }
+        .hero-profile-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 490px;
+            height: 490px;
+            background: radial-gradient(circle, rgba(56,189,248,0.18) 0%, rgba(147,210,255,0.10) 50%, transparent 75%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(18px);
+        }
+        .hero-profile-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 360px;
+            height: 360px;
+            background: radial-gradient(circle, rgba(186,230,255,0.22) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero-profile-wrapper figure {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Floating tech icons */
+        .hero-float-icon {
+            position: absolute;
+            opacity: 0;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.82);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(56,189,248,0.20);
+            box-shadow: 0 4px 16px rgba(56,189,248,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            animation: floatIn 0.8s ease forwards, floatBob var(--bob-duration, 4s) ease-in-out var(--bob-delay, 0s) infinite;
+        }
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(14px) scale(0.88); }
+            to   { opacity: 1; transform: translateY(0)    scale(1); }
+        }
+        @keyframes floatBob {
+            0%,100% { transform: translateY(0);    }
+            50%      { transform: translateY(-9px); }
+        }
+
         /* ══════ RESPONSIVE ══════ */
 
         /* Tablet ≤ 992px */
         @media (max-width: 992px) {
-            .about-layout  { flex-direction: column !important; align-items:center !important; gap:40px !important; }
-            .about-left    { width:100% !important; }
+            .about-layout  { flex-direction: column !important; align-items:center !important; gap:32px !important; }
+            .about-left    { width:100% !important; align-items:center; }
             .about-right   { width:100% !important; padding-left:0 !important; }
         }
 
@@ -138,6 +260,9 @@
             .contact-grid  { grid-template-columns: 1fr !important; }
             .footer-inner  { justify-content:center !important; text-align:center; }
             .footer-nav    { justify-content:center !important; width:100%; }
+            .hero-float-icon { display: none !important; }
+            .hero-profile-wrapper::before,
+            .hero-profile-wrapper::after { width: 220px; height: 220px; }
         }
 
         /* Small mobile ≤ 480px */
@@ -154,8 +279,9 @@
 
     <!-- ═══ NAVBAR ═══ -->
     <header>
-        <nav class="navbar-inner fixed top-0 left-0 right-0 z-[1000] flex justify-between items-center px-[60px] py-5 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)] gap-4 flex-wrap"
+        <nav class="navbar-inner fixed top-0 left-0 right-0 z-[1000] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.1)]"
             aria-label="Primary navigation">
+            <div class="nav-container flex justify-between items-center px-6 py-5 gap-4 flex-wrap">
 
             <p class="text-[22px] font-semibold text-sky-400">Rangga</p>
 
@@ -182,15 +308,16 @@
                         class="nav-item        text-[#2D3748] px-[15px] py-2 relative z-[2] rounded-lg transition-all duration-200 hover:text-sky-400 hover:bg-sky-50 no-underline">Contact</a>
                 </li>
             </ul>
+            </div>
         </nav>
     </header>
 
     <main>
 
         <!-- ═══ HOME ═══ -->
-        <section id="home" class="px-[8%] py-20 bg-slate-100 min-h-[90vh] flex items-center"
+        <section id="home" class="px-6 py-20 min-h-[90vh] flex items-center"
             aria-labelledby="home-title">
-            <div class="home-layout w-full max-w-[1100px] mx-auto flex items-center justify-between gap-[50px]">
+            <div class="home-layout section-container flex items-center justify-between gap-[50px]">
 
                 <article class="flex-1 animate-fade-up">
                     <h1 id="home-title" class="home-title text-[42px] font-bold mb-[10px]">Hi, I'm Rangga</h1>
@@ -228,248 +355,282 @@
                     </a>
                 </article>
 
-                <figure
-                    class="home-profile flex-shrink-0 w-[420px] h-[420px] m-0 rounded-full overflow-hidden border-[3px] border-sky-400 animate-fade-up-delay shadow-[0_0_40px_rgba(56,189,248,0.2)]">
-                    <img src="src/Profile.png" alt="Profile Picture" class="w-full h-full object-cover">
-                </figure>
+                <div class="hero-profile-wrapper flex-shrink-0 animate-fade-up-delay">
+                    <!-- Floating tech icons -->
+                    <span class="hero-float-icon w-[48px] h-[48px]" style="top:-18px;left:-30px;animation-delay:0.4s;--bob-duration:4.2s;--bob-delay:0s;">
+                        <i class="devicon-html5-plain colored text-[24px]"></i>
+                    </span>
+                    <span class="hero-float-icon w-[44px] h-[44px]" style="top:30px;right:-32px;animation-delay:0.6s;--bob-duration:3.8s;--bob-delay:0.6s;">
+                        <i class="devicon-css3-plain colored text-[22px]"></i>
+                    </span>
+                    <span class="hero-float-icon w-[44px] h-[44px]" style="bottom:40px;right:-40px;animation-delay:0.8s;--bob-duration:4.5s;--bob-delay:1.2s;">
+                        <i class="devicon-javascript-plain colored text-[22px]"></i>
+                    </span>
+                    <span class="hero-float-icon w-[46px] h-[46px]" style="bottom:-12px;left:20px;animation-delay:1.0s;--bob-duration:3.6s;--bob-delay:0.9s;">
+                        <i class="devicon-react-original colored text-[22px]"></i>
+                    </span>
+                    <span class="hero-float-icon w-[42px] h-[42px]" style="top:50%;left:-44px;margin-top:-20px;animation-delay:1.2s;--bob-duration:4.8s;--bob-delay:0.3s;">
+                        <i class="devicon-github-original text-[22px] text-gray-700"></i>
+                    </span>
+
+                    <figure
+                        class="home-profile w-[420px] h-[420px] m-0 rounded-full overflow-hidden border-[3px] border-sky-400 shadow-[0_0_40px_rgba(56,189,248,0.2)]">
+                        <img src="src/Profile.png" alt="Profile Picture" class="w-full h-full object-cover">
+                    </figure>
+                </div>
             </div>
         </section>
 
         <!-- ═══ ABOUT ═══ -->
-        <section id="about" class="px-[8%] py-[60px] bg-white" aria-labelledby="about-title">
+        <section id="about" class="px-6 py-16 bg-white" aria-labelledby="about-title">
+            <div class="section-container">
 
-            <!-- Title + foto di tengah -->
-            <div class="reveal flex flex-col items-center mb-[50px]">
-                <h2 id="about-title" class="text-[32px] font-bold mb-7">About Me</h2>
-                <figure class="w-[200px] h-[200px] rounded-full border-[8px] border-sky-200 overflow-hidden shadow-lg">
-                    <img src="src/Profile.png" alt="Profile Picture" class="w-full h-full object-cover">
-                </figure>
-            </div>
+                <!-- Title -->
+                <div class="reveal text-center mb-12">
+                    <h2 id="about-title" class="text-[32px] font-bold mb-2">About Me</h2>
+                    <div class="w-16 h-1 bg-sky-400 rounded mx-auto"></div>
+                </div>
 
-            <div class="about-layout flex gap-20 items-start">
+                <!-- Story + Photo row -->
+                <div class="about-layout flex gap-14 items-start mb-14">
 
-                <!-- LEFT -->
-                <aside class="about-left w-[44%] flex flex-col items-center reveal-left">
-                    <div class="toggle-btns flex justify-center mb-9">
-                        <button
-                            class="active px-[22px] py-[10px] border border-sky-400 bg-transparent cursor-pointer text-base font-medium transition-all duration-300 rounded-l"
-                            onclick="showExperience()">Experience</button>
-                        <button
-                            class="px-[22px] py-[10px] border border-sky-400 bg-transparent cursor-pointer text-base font-medium transition-all duration-300 rounded-r"
-                            onclick="showEducation()">Education</button>
+                    <!-- LEFT: photo + story -->
+                    <div class="about-left w-[42%] reveal-left flex flex-col items-center">
+                        <figure class="w-[170px] h-[170px] rounded-full border-[6px] border-sky-200 overflow-hidden shadow-lg mb-8 flex-shrink-0">
+                            <img src="src/Profile.png" alt="Profile Picture" class="w-full h-full object-cover">
+                        </figure>
+                        <h3 class="text-[26px] font-bold mb-4 text-center">My story</h3>
+                        <p class="text-[16px] text-gray-500 leading-[1.85] text-left">
+                            I am a web developer dedicated to building efficient and elegant digital solutions.
+                            With experience in design, I strive to translate client vision into intuitive interfaces.
+                            I believe that small details in code and visuals create real impact on user satisfaction.
+                        </p>
                     </div>
 
-                    <div id="experience-content" class="w-full">
-                        <article class="relative w-full max-w-[560px] pl-7 mb-9 border-l-4 border-sky-400">
-                            <h4 class="text-[23px] font-bold">Web Designer</h4>
-                            <span class="text-base text-sky-400 block my-2">2023</span>
-                            <p class="text-[17px] text-gray-500 leading-[1.8]">During this period, I dedicated my time
-                                to exploring the role of a professional Web Designer with a focus on intuitive
-                                interfaces. I successfully translated client needs into functional and aesthetically
-                                appealing design prototypes with a modern touch.</p>
-                        </article>
-                        <article class="relative w-full max-w-[560px] pl-7 mb-9 border-l-4 border-sky-400">
-                            <h4 class="text-[23px] font-bold">Web Developer</h4>
-                            <span class="text-base text-sky-400 block my-2">2024</span>
-                            <p class="text-[17px] text-gray-500 leading-[1.8]">At the same time, I actively contribute
-                                as a Web Developer to turn designs into complete and functional digital products. I am
-                                responsible for building clean, responsive, and optimized code structures across various
-                                devices and browsers.</p>
-                        </article>
-                    </div>
-
-                    <div id="education-content" class="hidden w-full">
-                        <article class="relative w-full max-w-[560px] pl-7 mb-9 border-l-4 border-sky-400">
-                            <h4 class="text-[23px] font-bold">Informatics Student</h4>
-                            <span class="text-base text-sky-400 block my-2">2023 - Present</span>
-                            <p class="text-[17px] text-gray-500 leading-[1.8]">I studied at university majoring in
-                                Informatics, where I specialized in web development. There, I also learned how computers
-                                and systems work.</p>
-                        </article>
-                        <article class="relative w-full max-w-[560px] pl-7 mb-9 border-l-4 border-sky-400">
-                            <h4 class="text-[23px] font-bold">Web developer bootcamp</h4>
-                            <span class="text-base text-sky-400 block my-2">2025</span>
-                            <p class="text-[17px] text-gray-500 leading-[1.8]">I completed intensive education in Web
-                                Development to deepen my mastery of modern technology and the latest web architecture.
-                                This program equipped me with a deep understanding of programming languages and
-                                frameworks that are the main standards in the digital industry.</p>
-                        </article>
-                    </div>
-                </aside>
-
-                <!-- RIGHT -->
-                <article class="about-right w-[56%] pl-6 reveal-right">
-                    <h2 class="text-[44px] font-bold mb-[18px]">My story</h2>
-                    <p class="text-[19px] text-gray-500 leading-[1.9] mb-[46px] max-w-[760px]">
-                        I am a web developer dedicated to building efficient and elegant digital solutions.
-                        With experience in design, I strive to translate client vision into intuitive interfaces.
-                        I believe that small details in code and visuals create real impact on user satisfaction.
-                    </p>
-
-                    <!-- SKILLS
-                         Desktop: 4 cols | Tablet: 2 cols | Mobile: 2 cols (2×2 grid) -->
-                    <section id="skill" aria-labelledby="skill-title">
-                        <h2 id="skill-title" class="text-3xl font-semibold text-gray-800 mb-8">Skill</h2>
-                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-                            <div
-                                class="reveal delay-100 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center">
-                                <i class="devicon-react-original colored text-5xl mb-4"></i>
-                                <h5 class="text-base font-medium text-gray-700">React</h5>
-                            </div>
-                            <div
-                                class="reveal delay-200 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center">
-                                <i class="devicon-javascript-plain colored text-5xl mb-4"></i>
-                                <h5 class="text-base font-medium text-gray-700">JavaScript</h5>
-                            </div>
-                            <div
-                                class="reveal delay-300 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center">
-                                <i class="devicon-nodejs-plain colored text-5xl mb-4"></i>
-                                <h5 class="text-base font-medium text-gray-700">Node.js</h5>
-                            </div>
-                            <div
-                                class="reveal delay-400 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center">
-                                <i class="devicon-tailwindcss-plain colored text-5xl mb-4"></i>
-                                <h5 class="text-base font-medium text-gray-700">Tailwind</h5>
-                            </div>
+                    <!-- RIGHT: Experience / Education -->
+                    <aside class="about-right w-[58%] pl-4 reveal-right">
+                        <div class="toggle-btns flex justify-start mb-8">
+                            <button
+                                class="active px-[20px] py-[9px] border border-sky-400 bg-transparent cursor-pointer text-sm font-medium transition-all duration-300 rounded-l"
+                                onclick="showExperience()">Experience</button>
+                            <button
+                                class="px-[20px] py-[9px] border border-sky-400 bg-transparent cursor-pointer text-sm font-medium transition-all duration-300 rounded-r"
+                                onclick="showEducation()">Education</button>
                         </div>
-                    </section>
-                </article>
+
+                        <div id="experience-content" class="w-full">
+                            <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
+                                <h4 class="text-[20px] font-bold">Web Designer</h4>
+                                <span class="text-sm text-sky-400 block my-1.5">2023</span>
+                                <p class="text-[15px] text-gray-500 leading-[1.8]">During this period, I dedicated my time
+                                    to exploring the role of a professional Web Designer with a focus on intuitive
+                                    interfaces. I successfully translated client needs into functional and aesthetically
+                                    appealing design prototypes with a modern touch.</p>
+                            </article>
+                            <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
+                                <h4 class="text-[20px] font-bold">Web Developer</h4>
+                                <span class="text-sm text-sky-400 block my-1.5">2024</span>
+                                <p class="text-[15px] text-gray-500 leading-[1.8]">At the same time, I actively contribute
+                                    as a Web Developer to turn designs into complete and functional digital products. I am
+                                    responsible for building clean, responsive, and optimized code structures across various
+                                    devices and browsers.</p>
+                            </article>
+                        </div>
+
+                        <div id="education-content" class="hidden w-full">
+                            <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
+                                <h4 class="text-[20px] font-bold">Informatics Student</h4>
+                                <span class="text-sm text-sky-400 block my-1.5">2023 - Present</span>
+                                <p class="text-[15px] text-gray-500 leading-[1.8]">I studied at university majoring in
+                                    Informatics, where I specialized in web development. There, I also learned how computers
+                                    and systems work.</p>
+                            </article>
+                            <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
+                                <h4 class="text-[20px] font-bold">Web developer bootcamp</h4>
+                                <span class="text-sm text-sky-400 block my-1.5">2025</span>
+                                <p class="text-[15px] text-gray-500 leading-[1.8]">I completed intensive education in Web
+                                    Development to deepen my mastery of modern technology and the latest web architecture.
+                                    This program equipped me with a deep understanding of programming languages and
+                                    frameworks that are the main standards in the digital industry.</p>
+                            </article>
+                        </div>
+                    </aside>
+
+                </div>
+
+                <!-- Skills sub-section -->
+                <section id="skill" aria-labelledby="skill-title" class="reveal">
+                    <h3 id="skill-title" class="text-[24px] font-semibold text-gray-800 mb-6 text-center">Skill</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="reveal delay-100 bg-gray-50 border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-6 px-4 flex flex-col items-center justify-center">
+                            <i class="devicon-react-original colored text-4xl mb-3"></i>
+                            <h5 class="text-sm font-medium text-gray-700">React</h5>
+                        </div>
+                        <div class="reveal delay-200 bg-gray-50 border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-6 px-4 flex flex-col items-center justify-center">
+                            <i class="devicon-javascript-plain colored text-4xl mb-3"></i>
+                            <h5 class="text-sm font-medium text-gray-700">JavaScript</h5>
+                        </div>
+                        <div class="reveal delay-300 bg-gray-50 border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-6 px-4 flex flex-col items-center justify-center">
+                            <i class="devicon-nodejs-plain colored text-4xl mb-3"></i>
+                            <h5 class="text-sm font-medium text-gray-700">Node.js</h5>
+                        </div>
+                        <div class="reveal delay-400 bg-gray-50 border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 py-6 px-4 flex flex-col items-center justify-center">
+                            <i class="devicon-tailwindcss-plain colored text-4xl mb-3"></i>
+                            <h5 class="text-sm font-medium text-gray-700">Tailwind</h5>
+                        </div>
+                    </div>
+                </section>
 
             </div>
         </section>
 
         <!-- ═══ PROJECT ═══ -->
-        <section id="project" class="bg-slate-100 px-[8%] py-20 text-center" aria-labelledby="project-title">
-            <h2 id="project-title" class="reveal text-center text-[32px] font-bold mb-[50px]">My Project</h2>
+        <section id="project" class="bg-slate-100 px-6 py-16 text-center" aria-labelledby="project-title">
+            <div class="section-container">
 
-            <div class="flex justify-center mt-[50px]" id="projectGrid">
+                <div class="reveal text-center mb-10">
+                    <h2 id="project-title" class="text-[32px] font-bold mb-2">My Project</h2>
+                    <div class="w-16 h-1 bg-sky-400 rounded mx-auto"></div>
+                </div>
 
-                <article
-                    class="project-card reveal delay-100 bg-white p-[25px] rounded-2xl text-left relative overflow-hidden w-full max-w-[420px] shadow-md hover:shadow-xl transition">
-                    <div class="h-[200px] bg-gray-200 rounded-[14px] mb-5 overflow-hidden relative">
-                        <img src="src/Project1.png" alt="Project 1 Image"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                        <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-[14px]"></div>
-                    </div>
-                    <p class="text-sm leading-relaxed mb-5 text-gray-600">
-                        A summary of my experience, expertise, and best projects in one digital space.
-                    </p>
-                    <div class="flex gap-3">
-                        <a href="https://ranggakenz.github.io/CV-WEB-PROJECT/" target="_blank" rel="noopener noreferrer"
-                            class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition">
-                            Link
-                        </a>
-                        <a href="https://github.com/RanggaKenz/CV-WEB-PROJECT" target="_blank" rel="noopener noreferrer"
-                            class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition">
-                            Github
-                        </a>
-                    </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="projectGrid">
 
-                </article>
-                <!-- Empty card placeholders for layout consistency 
-                <article class="project-card reveal delay-200 bg-white p-[25px] rounded-2xl text-left relative overflow-hidden">
-                    <div class="h-[180px] bg-gray-200 rounded-[14px] mb-5 relative">
-                        <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-[14px]"></div>
-                    </div>
-                    <p class="text-sm leading-relaxed mb-5 text-gray-600">Empty Project</p>
-                    <div class="flex flex-wrap gap-3">
-                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Link</a>
-                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Github</a>
-                    </div>
-                </article>
+                    <!-- Project 1 (always visible) -->
+                    <article class="project-card reveal delay-100 bg-white p-6 rounded-2xl text-left relative overflow-hidden shadow-md">
+                        <div class="h-[190px] bg-gray-200 rounded-xl mb-4 overflow-hidden relative">
+                            <img src="src/Project1.png" alt="Project 1 Image"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-xl"></div>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-4 text-gray-600">
+                            A summary of my experience, expertise, and best projects in one digital space.
+                        </p>
+                        <div class="flex gap-3">
+                            <a href="https://ranggakenz.github.io/CV-WEB-PROJECT/" target="_blank" rel="noopener noreferrer"
+                                class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">
+                                Link
+                            </a>
+                            <a href="https://github.com/RanggaKenz/CV-WEB-PROJECT" target="_blank" rel="noopener noreferrer"
+                                class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">
+                                Github
+                            </a>
+                        </div>
+                    </article>
+<!--hiden project
+                    
+                    <article class="project-card reveal delay-200 bg-white p-6 rounded-2xl text-left relative overflow-hidden shadow-md">
+                        <div class="h-[190px] bg-gray-200 rounded-xl mb-4 relative">
+                            <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-xl"></div>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-4 text-gray-600">Coming soon — next project in progress.</p>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Link</a>
+                            <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Github</a>
+                        </div>
+                    </article>
 
-                <article class="project-card reveal delay-300 bg-white p-[25px] rounded-2xl text-left relative overflow-hidden">
-                    <div class="h-[180px] bg-gray-200 rounded-[14px] mb-5 relative">
-                        <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-[14px]"></div>
-                    </div>
-                    <p class="text-sm leading-relaxed mb-5 text-gray-600">Empty Project</p>
-                    <div class="flex flex-wrap gap-3">
-                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Link</a>
-                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Github</a>
-                    </div>
-                </article>
-
-                <article class="hidden-project hidden project-card bg-white p-[25px] rounded-2xl text-left relative overflow-hidden">
-                    <div class="h-[180px] bg-gray-200 rounded-[14px] mb-5 relative">
-                        <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-[14px]"></div>
-                    </div>
-                    <p class="text-sm leading-relaxed mb-5 text-gray-600">Another Empty Project</p>
-                    <div class="flex flex-wrap gap-3">
-                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Link</a>
-                        <a href="#" class="flex-1 text-center bg-sky-400 py-[10px] rounded-lg text-white no-underline font-semibold text-sm hover:bg-sky-500 transition-colors duration-200">Github</a>
-                    </div>
-                </article>
------->
+                    
+                    <article class="hidden-project project-card bg-white p-6 rounded-2xl text-left relative overflow-hidden shadow-md" style="display:none;">
+                        <div class="h-[190px] bg-gray-200 rounded-xl mb-4 relative">
+                            <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-xl"></div>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-4 text-gray-600">Another project — coming soon.</p>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Link</a>
+                            <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Github</a>
+                        </div>
+                    </article>
+                -->
+                </div>
+<!-- Toggle button 
+                <button id="toggleProjectBtn"
+                    class="reveal mt-10 px-9 py-3 bg-sky-400 border-none rounded-xl text-base text-white cursor-pointer transition-all duration-300 hover:opacity-80 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
+                    Show More
+                </button>
+            -->
             </div>
-
-            <button id="toggleProjectBtn"
-                class="reveal mt-[50px] px-10 py-3 bg-sky-400 border-none rounded-xl text-lg text-white cursor-pointer transition-all duration-300 hover:opacity-80 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
-                More
-            </button>
         </section>
 
         <!-- ═══ CONTACT ═══ -->
-        <section id="contact" class="bg-white px-[8%] py-20 text-center" aria-labelledby="contact-title">
-            <h2 id="contact-title" class="reveal text-[36px] font-bold text-[#2D3748] mb-[60px]">Contact</h2>
+        <section id="contact" class="bg-white px-6 py-16 text-center" aria-labelledby="contact-title">
+            <div class="section-container">
 
-            <div class="contact-grid grid gap-[60px] max-w-[1000px] mx-auto" style="grid-template-columns: 1fr 1fr;">
+                <div class="reveal text-center mb-10">
+                    <h2 id="contact-title" class="text-[32px] font-bold text-[#2D3748] mb-2">Contact</h2>
+                    <div class="w-16 h-1 bg-sky-400 rounded mx-auto"></div>
+                </div>
 
-                <!-- FORM -->
-                <article class="reveal-left text-left">
-                    <h2 class="text-[22px] font-semibold text-[#2D3748] mb-[30px] text-center">Send me a message</h2>
-                    <form class="flex flex-col gap-5" action="https://formspree.io/f/myknygly" method="POST">
-                        <div class="flex flex-col items-start gap-2">
-                            <label for="name" class="font-semibold text-[#2D3748] text-sm">Name</label>
-                            <input type="text" id="name" name="name" required
-                                class="contact-input w-full px-[15px] py-3 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748]">
+                <div class="contact-grid grid gap-12 max-w-[880px] mx-auto" style="grid-template-columns: 1fr 1fr;">
+
+                    <!-- FORM -->
+                    <article class="reveal-left text-left">
+                        <h3 class="text-[18px] font-semibold text-[#2D3748] mb-6 text-center">Send me a message</h3>
+                        <form id="contactForm" class="flex flex-col gap-4" action="https://formspree.io/f/myknygly" method="POST">
+                            <div class="flex flex-col items-start gap-1.5">
+                                <label for="name" class="font-semibold text-[#2D3748] text-xs uppercase tracking-wide">Name</label>
+                                <input type="text" id="name" name="name" required
+                                    class="contact-input w-full px-4 py-2.5 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748] bg-white">
+                            </div>
+                            <div class="flex flex-col items-start gap-1.5">
+                                <label for="email" class="font-semibold text-[#2D3748] text-xs uppercase tracking-wide">Email</label>
+                                <input type="email" id="email" name="email" required
+                                    class="contact-input w-full px-4 py-2.5 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748] bg-white">
+                            </div>
+                            <div class="flex flex-col items-start gap-1.5">
+                                <label for="message" class="font-semibold text-[#2D3748] text-xs uppercase tracking-wide">Message</label>
+                                <textarea id="message" name="message" rows="4" required
+                                    class="contact-input w-full px-4 py-2.5 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748] resize-y min-h-[110px] bg-white"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="px-8 py-3 bg-sky-400 text-white border-none rounded-lg font-semibold text-sm cursor-pointer transition-all duration-300 hover:opacity-85 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
+                                Send Message
+                            </button>
+                        </form>
+                    </article>
+
+                    <!-- SOCIAL -->
+                    <aside class="reveal-right flex flex-col justify-center items-center">
+                        <h3 class="text-[18px] font-semibold text-[#2D3748] mb-6 text-center">Connect with me</h3>
+                        <div class="flex gap-5 flex-wrap justify-center">
+                            <a href="https://www.instagram.com/m.rangga_5657/" target="_blank" rel="noopener noreferrer"
+                                class="social-contact-icon inline-flex items-center justify-center w-[58px] h-[58px] bg-white rounded-full border-2 border-sky-200 text-[#e4405f] no-underline"
+                                title="Instagram" aria-label="Instagram">
+                                <i class="fa-brands fa-instagram text-[26px]"></i>
+                            </a>
+                            <a href="https://github.com/RanggaKenz" target="_blank" rel="noopener noreferrer"
+                                class="social-contact-icon inline-flex items-center justify-center w-[58px] h-[58px] bg-white rounded-full border-2 border-sky-200 text-[#111827] no-underline"
+                                title="GitHub" aria-label="GitHub">
+                                <i class="fa-brands fa-github text-[26px]"></i>
+                            </a>
+                            <a href="https://wa.me/6289634444483" target="_blank" rel="noopener noreferrer"
+                                class="social-contact-icon inline-flex items-center justify-center w-[58px] h-[58px] bg-white rounded-full border-2 border-sky-200 text-[#25d366] no-underline"
+                                title="WhatsApp" aria-label="WhatsApp">
+                                <i class="fa-brands fa-whatsapp text-[26px]"></i>
+                            </a>
                         </div>
-                        <div class="flex flex-col items-start gap-2">
-                            <label for="email" class="font-semibold text-[#2D3748] text-sm">Email</label>
-                            <input type="email" id="email" name="email" required
-                                class="contact-input w-full px-[15px] py-3 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748]">
-                        </div>
-                        <div class="flex flex-col items-start gap-2">
-                            <label for="message" class="font-semibold text-[#2D3748] text-sm">Message</label>
-                            <textarea id="message" name="message" rows="5" required
-                                class="contact-input w-full px-[15px] py-3 border-2 border-sky-200 rounded-lg text-sm text-[#2D3748] resize-y min-h-[120px]"></textarea>
-                        </div>
-                        <button type="submit"
-                            class="px-10 py-[14px] bg-sky-400 text-white border-none rounded-lg font-semibold text-base cursor-pointer transition-all duration-300 hover:opacity-85 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
-                            Send Message
-                        </button>
-                    </form>
-                </article>
+                    </aside>
 
-                <!-- SOCIAL -->
-                <aside class="reveal-right flex flex-col justify-center items-center">
-                    <h2 class="text-[22px] font-semibold text-[#2D3748] mb-[30px] text-center">Connect with me</h2>
-                    <div class="flex gap-6 flex-wrap justify-center">
-                        <a href="https://www.instagram.com/m.rangga_5657/" target="_blank" rel="noopener noreferrer"
-                            class="social-contact-icon inline-flex items-center justify-center w-[65px] h-[65px] bg-white rounded-full border-2 border-sky-200 text-[#e4405f] no-underline"
-                            title="Instagram" aria-label="Instagram">
-                            <i class="fa-brands fa-instagram text-[30px]"></i>
-                        </a>
-                        <a href="https://github.com/RanggaKenz" target="_blank" rel="noopener noreferrer"
-                            class="social-contact-icon inline-flex items-center justify-center w-[65px] h-[65px] bg-white rounded-full border-2 border-sky-200 text-[#111827] no-underline"
-                            title="GitHub" aria-label="GitHub">
-                            <i class="fa-brands fa-github text-[30px]"></i>
-                        </a>
-                        <a href="https://wa.me/6289634444483" target="_blank" rel="noopener noreferrer"
-                            class="social-contact-icon inline-flex items-center justify-center w-[65px] h-[65px] bg-white rounded-full border-2 border-sky-200 text-[#25d366] no-underline"
-                            title="WhatsApp" aria-label="WhatsApp">
-                            <i class="fa-brands fa-whatsapp text-[30px]"></i>
-                        </a>
-                    </div>
-                </aside>
-
+                </div>
             </div>
         </section>
+
+        <!-- ── TOAST NOTIFICATION ── -->
+        <div id="toast" role="alert" aria-live="polite">
+            <div class="toast-icon">
+                <i class="fa-solid fa-check text-sky-400 text-[15px]"></i>
+            </div>
+            <div>
+                <p class="font-semibold text-[#2D3748] text-sm m-0">Message sent!</p>
+                <p class="text-gray-500 text-xs m-0 mt-0.5">I'll get back to you soon.</p>
+            </div>
+            <button onclick="hideToast()" class="ml-4 text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer text-lg leading-none" aria-label="Close">&times;</button>
+        </div>
 
     </main>
 
     <!-- ═══ FOOTER ═══ -->
-    <footer class="bg-gray-900 text-gray-200 px-[8%] py-6">
-        <div class="footer-inner flex justify-between items-center flex-wrap gap-4">
+    <footer class="bg-gray-900 text-gray-200 px-6 py-6">
+        <div class="footer-inner section-container flex justify-between items-center flex-wrap gap-4">
             <p class="m-0 text-sm">&copy; 2026 Rangga. All rights reserved.</p>
             <nav class="footer-nav flex gap-[18px] flex-wrap" aria-label="Footer navigation">
                 <a href="#home"
@@ -590,15 +751,59 @@
         const hiddenProjects = document.querySelectorAll(".hidden-project");
         let expanded = false;
 
-        toggleBtn.addEventListener("click", () => {
+        if (toggleBtn) toggleBtn.addEventListener("click", () => {
             expanded = !expanded;
             hiddenProjects.forEach(p => {
                 p.style.display = expanded ? "block" : "none";
                 if (expanded) setTimeout(() => p.classList.add("visible"), 50);
                 else p.classList.remove("visible");
             });
-            toggleBtn.textContent = expanded ? "Show Less" : "More";
+            toggleBtn.textContent = expanded ? "Show Less" : "Show More";
         });
+
+        /* ══ TOAST NOTIFICATION ══ */
+        const toast = document.getElementById("toast");
+        let toastTimer;
+
+        function showToast() {
+            clearTimeout(toastTimer);
+            toast.classList.add("show");
+            toastTimer = setTimeout(hideToast, 4000);
+        }
+        function hideToast() {
+            toast.classList.remove("show");
+        }
+
+        /* ══ FORM SUBMIT ══ */
+        const contactForm = document.getElementById("contactForm");
+        if (contactForm) {
+            contactForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const btn = contactForm.querySelector("button[type=submit]");
+                const origText = btn.textContent;
+                btn.textContent = "Sending…";
+                btn.disabled = true;
+
+                try {
+                    const res = await fetch(contactForm.action, {
+                        method: "POST",
+                        body: new FormData(contactForm),
+                        headers: { "Accept": "application/json" }
+                    });
+                    if (res.ok) {
+                        contactForm.reset();
+                        showToast();
+                    } else {
+                        alert("Oops! Something went wrong. Please try again.");
+                    }
+                } catch {
+                    alert("Network error. Please check your connection.");
+                } finally {
+                    btn.textContent = origText;
+                    btn.disabled = false;
+                }
+            });
+        }
     </script>
 
 </body>
