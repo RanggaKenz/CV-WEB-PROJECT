@@ -73,32 +73,47 @@
         .delay-400 { transition-delay:.4s; }
 
         /* ── PROJECT CARD ── */
-        .project-card {
-            transition: transform .35s ease, box-shadow .35s ease;
-        }
-        .project-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(56,189,248,0.18);
-        }
-        .card-overlay { opacity:0; transition: opacity .3s ease; }
-        .project-card:hover .card-overlay { opacity:1; }
+        .project-card { }
+        .card-overlay { opacity: 0; }
 
-        /* ── PROJECT SLIDER ── */
+        /* ── PROJECT MARQUEE SLIDER ── */
         .project-slider {
-            border: 2px solid #e2e8f0;
-            border-radius: 24px;
-            padding: 18px;
-            background: #f8fafc;
             overflow: hidden;
+            padding: 8px 0 16px;
+            /* fade edges */
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
         }
         .project-track {
             display: flex;
             gap: 18px;
-            transition: transform .6s ease;
-            will-change: transform;
+            width: max-content;
         }
+
+        /* ── SLIDER NAV BUTTONS ── */
+        .slider-btn {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #bae6fd;
+            color: #38BDF8;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: background .25s, border-color .25s, transform .2s, box-shadow .25s;
+            flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(56,189,248,0.12);
+            z-index: 2;
+        }
+        .slider-btn:hover {
+            background: #38BDF8;
+            border-color: #38BDF8;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 4px 18px rgba(56,189,248,0.28);
+        }
+        /* project-track defined in marquee block above */
         .project-slide {
-            flex: 0 0 clamp(260px, 34vw, 420px);
+            flex: 0 0 clamp(280px, 32vw, 380px);
         }
 
         /* ── CONTACT INPUT ── */
@@ -254,7 +269,7 @@
             .about-layout  { flex-direction: column !important; align-items:center !important; gap:32px !important; }
             .about-left    { width:100% !important; align-items:center; }
             .about-right   { width:100% !important; padding-left:0 !important; }
-            .project-slide { flex-basis: clamp(240px, 50vw, 380px); }
+            .project-slide { flex-basis: clamp(240px, 45vw, 340px); }
         }
 
         /* Mobile */
@@ -284,7 +299,7 @@
             .hero-profile-wrapper::after { width: 220px; height: 220px; }
             .project-slider { padding: 14px; }
             .project-track { gap: 14px; }
-            .project-slide { flex-basis: 85%; }
+            .project-slide { flex-basis: 88%; }
         }
 
         /* Small mobile  */
@@ -293,7 +308,7 @@
             .home-title    { font-size:26px !important; }
             .home-sub      { font-size:20px !important; }
             .home-profile  { width:150px !important; height:150px !important; }
-            .project-slide { flex-basis: 92%; }
+            .project-slide { flex-basis: 94%; }
         }
     </style>
 </head>
@@ -511,21 +526,30 @@
         <section id="project" class="bg-slate-100 px-6 py-16 text-center" aria-labelledby="project-title">
             <div class="section-container">
 
-                <div class="reveal text-center mb-10">
+                <div class="text-center mb-10">
                     <h2 id="project-title" class="text-[32px] font-bold mb-2">My Project</h2>
                     <div class="w-16 h-1 bg-sky-400 rounded mx-auto"></div>
                 </div>
 
-                <div id="projectSlider" class="project-slider">
+                <!-- Slider controls -->
+                <div class="flex items-center gap-4">
+                    <button id="slidePrev" class="slider-btn" aria-label="Geser kiri" title="Geser kiri">
+                        <i class="fa-solid fa-chevron-left text-[16px]"></i>
+                    </button>
+
+                    <div id="projectSlider" class="project-slider flex-1">
                     <div id="projectTrack" class="project-track">
 
                     <!-- Project 1 -->
-                    <article class="project-slide project-card reveal delay-100 bg-white p-6 rounded-2xl text-left relative overflow-hidden shadow-md">
+                    <article class="project-slide project-card bg-white p-6 rounded-2xl text-left relative overflow-hidden shadow-md">
                         <div class="h-[190px] bg-gray-200 rounded-xl mb-4 overflow-hidden relative">
                             <img src="src/Project1.png" alt="Project 1 Image"
-                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                                class="w-full h-full object-cover">
                             <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-xl"></div>
                         </div>
+                        <p class="text-sm leading-relaxed mb-5 text-gray 500 ">
+                            Web portfolio
+                        </p>
                         <p class="text-sm leading-relaxed mb-4 text-gray-600">
                             A summary of my experience, expertise, and best projects in one digital space.
                         </p>
@@ -541,7 +565,7 @@
                         </div>
                     </article>
 
-                    
+ <!-- hiding project            
                     <article class="project-slide project-card reveal delay-200 bg-white p-6 rounded-2xl text-left relative overflow-hidden shadow-md">
                         <div class="h-[190px] bg-gray-200 rounded-xl mb-4 relative">
                             <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-xl"></div>
@@ -564,10 +588,36 @@
                             <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Github</a>
                         </div>
                     </article>
-                
+                           
+                     <article class="project-slide project-card reveal delay-300 bg-white p-6 rounded-2xl text-left relative overflow-hidden shadow-md">
+                        <div class="h-[190px] bg-gray-200 rounded-xl mb-4 relative">
+                            <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-xl"></div>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-4 text-gray-600">Another project — coming soon.</p>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Link</a>
+                            <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Github</a>
+                        </div>
+                    </article>
+
+                     <article class="project-slide project-card reveal delay-300 bg-white p-6 rounded-2xl text-left relative overflow-hidden shadow-md">
+                        <div class="h-[190px] bg-gray-200 rounded-xl mb-4 relative">
+                            <div class="card-overlay absolute inset-0 bg-sky-400/10 rounded-xl"></div>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-4 text-gray-600">Another project — coming soon.</p>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Link</a>
+                            <a href="#" class="flex-1 text-center bg-sky-400 py-2.5 rounded-lg text-white font-semibold text-sm hover:bg-sky-500 transition no-underline">Github</a>
+                        </div>
+                    </article>
+                -->
                     </div>
                 </div>
-            
+
+                    <button id="slideNext" class="slider-btn" aria-label="Geser kanan" title="Geser kanan">
+                        <i class="fa-solid fa-chevron-right text-[16px]"></i>
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -752,71 +802,49 @@
 
         revealEls.forEach(el => observer.observe(el));
 
-        /* ══ PROJECT SLIDER ══ */
-        const projectSlider = document.getElementById("projectSlider");
-        const projectTrack = document.getElementById("projectTrack");
-        let slideIndex = 0;
-        let slideStep = 0;
-        let maxTranslate = 0;
-        let sliderTimer;
+        /* ══ PROJECT SLIDER (MANUAL ONLY) ══ */
+        (function () {
+            const slider = document.getElementById("projectSlider");
+            const track = document.getElementById("projectTrack");
+            const prevBtn = document.getElementById("slidePrev");
+            const nextBtn = document.getElementById("slideNext");
+            if (!slider || !track) return;
 
-        function computeSlider() {
-            if (!projectSlider || !projectTrack) return;
-            const slides = projectTrack.children;
-            if (!slides.length) return;
+            let index = 0;
 
-            const first = slides[0];
-            const second = slides[1];
-            const style = getComputedStyle(projectTrack);
-            const gap = parseFloat(style.columnGap || style.gap || "18") || 18;
+            const step = () => {
+                const card = track.querySelector(".project-slide");
+                const gap = parseFloat(getComputedStyle(track).gap) || 18;
+                return card ? card.offsetWidth + gap : 300;
+            };
 
-            slideStep = second
-                ? (second.offsetLeft - first.offsetLeft)
-                : (first.getBoundingClientRect().width + gap);
+            const maxIndex = () => {
+                const stepSize = step();
+                const maxOffset = Math.max(0, track.scrollWidth - slider.clientWidth);
+                return stepSize ? Math.floor(maxOffset / stepSize) : 0;
+            };
 
-            maxTranslate = Math.max(0, projectTrack.scrollWidth - projectSlider.clientWidth);
-            const maxIndex = Math.max(0, Math.floor(maxTranslate / slideStep));
-            slideIndex = Math.min(slideIndex, maxIndex);
-            updateSlider();
-        }
-
-        function updateSlider() {
-            if (!projectTrack) return;
-            const target = Math.min(slideIndex * slideStep, maxTranslate);
-            projectTrack.style.transform = `translateX(-${target}px)`;
-        }
-
-        function startSlider() {
-            if (!projectTrack) return;
-            stopSlider();
-            if (maxTranslate <= 0) {
-                projectTrack.style.transform = "translateX(0px)";
-                return;
+            function update() {
+                const max = maxIndex();
+                if (index < 0) index = 0;
+                if (index > max) index = max;
+                const offset = -(index * step());
+                track.style.transform = `translateX(${offset}px)`;
             }
-            sliderTimer = setInterval(() => {
-                const maxIndex = Math.max(0, Math.floor(maxTranslate / slideStep));
-                slideIndex = slideIndex >= maxIndex ? 0 : slideIndex + 1;
-                updateSlider();
-            }, 3200);
-        }
 
-        function stopSlider() {
-            if (sliderTimer) clearInterval(sliderTimer);
-        }
+            prevBtn && prevBtn.addEventListener("click", () => {
+                index -= 1;
+                update();
+            });
 
-        if (projectSlider) {
-            projectSlider.addEventListener("mouseenter", stopSlider);
-            projectSlider.addEventListener("mouseleave", startSlider);
-        }
+            nextBtn && nextBtn.addEventListener("click", () => {
+                index += 1;
+                update();
+            });
 
-        window.addEventListener("load", () => {
-            computeSlider();
-            startSlider();
-        });
-        window.addEventListener("resize", () => {
-            computeSlider();
-            startSlider();
-        });
+            window.addEventListener("resize", update);
+            update();
+        })();
 
         /* ══ TOGGLE EXPERIENCE / EDUCATION ══ */
         function showExperience() {
