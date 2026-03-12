@@ -61,6 +61,61 @@
         /* ── TOGGLE BTNS ── */
         .toggle-btns button.active { background-color: #38BDF8; color: white; }
 
+        /* ── PULSE RING on profile ── */
+        @keyframes pulseRing {
+            0%   { transform: translate(-50%,-50%) scale(1);   opacity: 0.45; }
+            70%  { transform: translate(-50%,-50%) scale(1.18); opacity: 0; }
+            100% { transform: translate(-50%,-50%) scale(1.18); opacity: 0; }
+        }
+        .profile-pulse-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            border: 3px solid rgba(56,189,248,0.55);
+            animation: pulseRing 2.4s ease-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .profile-pulse-ring-2 {
+            animation-delay: 1.2s;
+        }
+
+        /* ── SHIMMER on project cards ── */
+        @keyframes shimmerSlide {
+            from { transform: translateX(-100%) skewX(-15deg); }
+            to   { transform: translateX(250%) skewX(-15deg); }
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+            transform: translateX(-100%) skewX(-15deg);
+            z-index: 5;
+            pointer-events: none;
+        }
+        .project-card:hover::before {
+            animation: shimmerSlide 0.7s ease forwards;
+        }
+
+        /* ── CARD lift on hover ── */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(56,189,248,0.18);
+        }
+
+        /* ── WAVE animation on section dividers ── */
+        @keyframes waveMove {
+            0%   { background-position: 0 0; }
+            100% { background-position: 60px 0; }
+        }
+
         /* ── SCROLL REVEAL ── */
         .reveal        { opacity:0; transform: translateY(36px);   transition: opacity .65s ease, transform .65s ease; }
         .reveal-left   { opacity:0; transform: translateX(-36px);  transition: opacity .65s ease, transform .65s ease; }
@@ -113,7 +168,7 @@
         }
         /* project-track defined in marquee block above */
         .project-slide {
-            flex: 0 0 clamp(280px, 32vw, 380px);
+            flex: 0 0 clamp(300px, 38vw, 400px);
         }
 
         /* ── CONTACT INPUT ── */
@@ -269,7 +324,7 @@
             .about-layout  { flex-direction: column !important; align-items:center !important; gap:32px !important; }
             .about-left    { width:100% !important; align-items:center; }
             .about-right   { width:100% !important; padding-left:0 !important; }
-            .project-slide { flex-basis: clamp(240px, 45vw, 340px); }
+            .project-slide { flex-basis: clamp(260px, 48vw, 360px); }
         }
 
         /* Mobile */
@@ -287,19 +342,25 @@
             .home-layout   { flex-direction: column-reverse; gap:24px !important; }
             .home-layout article { text-align:center; }
             .home-social   { justify-content:center !important; }
-            .home-profile  { width:180px !important; height:180px !important; }
+            .home-profile  { width:200px !important; height:200px !important; }
             .home-title    { font-size:30px !important; }
             .home-sub      { font-size:24px !important; }
             .home-desc     { margin: 0 auto 24px !important; font-size:15px; }
             .contact-grid  { grid-template-columns: 1fr !important; }
             .footer-inner  { justify-content:center !important; text-align:center; }
             .footer-nav    { justify-content:center !important; width:100%; }
-            .hero-float-icon { display: none !important; }
+            /* Show float icons on mobile but smaller */
+            .hero-float-icon {
+                display: flex !important;
+                width: 36px !important;
+                height: 36px !important;
+            }
+            .hero-float-icon i { font-size: 18px !important; }
             .hero-profile-wrapper::before,
-            .hero-profile-wrapper::after { width: 220px; height: 220px; }
+            .hero-profile-wrapper::after { width: 260px; height: 260px; }
             .project-slider { padding: 14px; }
             .project-track { gap: 14px; }
-            .project-slide { flex-basis: 88%; }
+            .project-slide { flex-basis: min(340px, 86vw); }
         }
 
         /* Small mobile  */
@@ -307,8 +368,13 @@
             .navbar-inner  { padding: 10px 12px !important; }
             .home-title    { font-size:26px !important; }
             .home-sub      { font-size:20px !important; }
-            .home-profile  { width:150px !important; height:150px !important; }
-            .project-slide { flex-basis: 94%; }
+            .home-profile  { width:170px !important; height:170px !important; }
+            .hero-float-icon {
+                width: 30px !important;
+                height: 30px !important;
+            }
+            .hero-float-icon i { font-size: 15px !important; }
+            .project-slide { flex-basis: min(300px, 90vw); }
         }
     </style>
 </head>
@@ -395,25 +461,27 @@
 
                 <div class="hero-profile-wrapper flex-shrink-0 animate-fade-up-delay">
                     <!-- Floating tech icons -->
-                    <span class="hero-float-icon w-[48px] h-[48px]" style="top:-18px;left:-30px;animation-delay:0.4s;--bob-duration:4.2s;--bob-delay:0s;">
-                        <i class="devicon-html5-plain colored text-[24px]"></i>
+                    <span class="hero-float-icon w-[58px] h-[58px]" style="top:-22px;left:-36px;animation-delay:0.4s;--bob-duration:4.2s;--bob-delay:0s;">
+                        <i class="devicon-html5-plain colored text-[30px]"></i>
                     </span>
-                    <span class="hero-float-icon w-[44px] h-[44px]" style="top:30px;right:-32px;animation-delay:0.6s;--bob-duration:3.8s;--bob-delay:0.6s;">
-                        <i class="devicon-css3-plain colored text-[22px]"></i>
+                    <span class="hero-float-icon w-[54px] h-[54px]" style="top:30px;right:-38px;animation-delay:0.6s;--bob-duration:3.8s;--bob-delay:0.6s;">
+                        <i class="devicon-css3-plain colored text-[28px]"></i>
                     </span>
-                    <span class="hero-float-icon w-[44px] h-[44px]" style="bottom:40px;right:-40px;animation-delay:0.8s;--bob-duration:4.5s;--bob-delay:1.2s;">
-                        <i class="devicon-javascript-plain colored text-[22px]"></i>
+                    <span class="hero-float-icon w-[54px] h-[54px]" style="bottom:40px;right:-46px;animation-delay:0.8s;--bob-duration:4.5s;--bob-delay:1.2s;">
+                        <i class="devicon-javascript-plain colored text-[28px]"></i>
                     </span>
-                    <span class="hero-float-icon w-[46px] h-[46px]" style="bottom:-12px;left:20px;animation-delay:1.0s;--bob-duration:3.6s;--bob-delay:0.9s;">
-                        <i class="devicon-react-original colored text-[22px]"></i>
+                    <span class="hero-float-icon w-[56px] h-[56px]" style="bottom:-18px;left:20px;animation-delay:1.0s;--bob-duration:3.6s;--bob-delay:0.9s;">
+                        <i class="devicon-react-original colored text-[28px]"></i>
                     </span>
-                    <span class="hero-float-icon w-[42px] h-[42px]" style="top:50%;left:-44px;margin-top:-20px;animation-delay:1.2s;--bob-duration:4.8s;--bob-delay:0.3s;">
-                        <i class="devicon-github-original text-[22px] text-gray-700"></i>
+                    <span class="hero-float-icon w-[52px] h-[52px]" style="top:50%;left:-52px;margin-top:-26px;animation-delay:1.2s;--bob-duration:4.8s;--bob-delay:0.3s;">
+                        <i class="devicon-github-original text-[28px] text-gray-700"></i>
                     </span>
 
                     <figure
-                        class="home-profile w-[420px] h-[420px] m-0 rounded-full overflow-hidden border-[3px] border-sky-400 shadow-[0_0_40px_rgba(56,189,248,0.2)]">
-                        <img src="src/Profile.png" alt="Profile Picture" class="w-full h-full object-cover">
+                        class="home-profile w-[420px] h-[420px] m-0 rounded-full overflow-hidden border-[3px] border-sky-400 shadow-[0_0_40px_rgba(56,189,248,0.2)] relative">
+                        <span class="profile-pulse-ring"></span>
+                        <span class="profile-pulse-ring profile-pulse-ring-2"></span>
+                        <img src="src/Profile.png" alt="Profile Picture" class="w-full h-full object-cover relative z-[1]">
                     </figure>
                 </div>
             </div>
@@ -458,14 +526,6 @@
 
                         <div id="experience-content" class="w-full">
                             <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
-                                <h4 class="text-[20px] font-bold">Web Designer</h4>
-                                <span class="text-sm text-sky-400 block my-1.5">2023</span>
-                                <p class="text-[15px] text-gray-500 leading-[1.8]">During this period, I dedicated my time
-                                    to exploring the role of a professional Web Designer with a focus on intuitive
-                                    interfaces. I successfully translated client needs into functional and aesthetically
-                                    appealing design prototypes with a modern touch.</p>
-                            </article>
-                            <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
                                 <h4 class="text-[20px] font-bold">Web Developer</h4>
                                 <span class="text-sm text-sky-400 block my-1.5">2024</span>
                                 <p class="text-[15px] text-gray-500 leading-[1.8]">At the same time, I actively contribute
@@ -473,23 +533,31 @@
                                     responsible for building clean, responsive, and optimized code structures across various
                                     devices and browsers.</p>
                             </article>
+                            <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
+                                <h4 class="text-[20px] font-bold">Web Desainer</h4>
+                                <span class="text-sm text-sky-400 block my-1.5">2023</span>
+                                <p class="text-[15px] text-gray-500 leading-[1.8]">During this period, I dedicated my time
+                                    to exploring the role of a professional Web Designer with a focus on intuitive
+                                    interfaces. I successfully translated client needs into functional and aesthetically
+                                    appealing design prototypes with a modern touch.</p>
+                            </article>
                         </div>
 
                         <div id="education-content" class="hidden w-full">
                             <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
-                                <h4 class="text-[20px] font-bold">Informatics Student</h4>
-                                <span class="text-sm text-sky-400 block my-1.5">2023 - Present</span>
-                                <p class="text-[15px] text-gray-500 leading-[1.8]">I studied at university majoring in
-                                    Informatics, where I specialized in web development. There, I also learned how computers
-                                    and systems work.</p>
-                            </article>
-                            <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
-                                <h4 class="text-[20px] font-bold">Web developer bootcamp</h4>
-                                <span class="text-sm text-sky-400 block my-1.5">2025</span>
+                                <h4 class="text-[20px] font-bold">Web Development bootcamp</h4>
+                                <span class="text-sm text-sky-400 block my-1.5">2026</span>
                                 <p class="text-[15px] text-gray-500 leading-[1.8]">I completed intensive education in Web
                                     Development to deepen my mastery of modern technology and the latest web architecture.
                                     This program equipped me with a deep understanding of programming languages and
                                     frameworks that are the main standards in the digital industry.</p>
+                            </article>
+                            <article class="relative w-full pl-6 mb-7 border-l-4 border-sky-400">
+                                <h4 class="text-[20px] font-bold">Informatics Student</h4>
+                                <span class="text-sm text-sky-400 block my-1.5">2023- Present</span>
+                                <p class="text-[15px] text-gray-500 leading-[1.8]">I studied at university majoring in
+                                    Informatics, where I specialized in web development. There, I also learned how computers
+                                    and systems work.</p>
                             </article>
                         </div>
                     </aside>
@@ -773,7 +841,7 @@
 
         /* ══ TYPING ANIMATION ══ */
         const typingEl = document.getElementById("typing-text");
-        const words = ["Web Developer", "UI Designer", "Freelancer"];
+        const words = ["Web Developer", "UI Designer", ];
         let wi = 0, ci = 0, deleting = false;
 
         function typeLoop() {
